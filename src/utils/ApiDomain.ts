@@ -1,0 +1,1 @@
+export const ApiDomain = 'http://localhost:5173/'

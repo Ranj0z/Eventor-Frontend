@@ -6,11 +6,6 @@ import userSlice from '../reducers/login/userSlice';
 
 import { usersAPI } from '../reducers/users/usersAPI';
 import { loginAPI } from '../reducers/login/loginAPI';
-import { doctorsAPI } from '../reducers/doctors/doctorsAPI';
-import { appointmentsAPI } from '../reducers/appointments/EventsAPI';
-import { complaintsAPI } from '../reducers/Tickets/ticketsAPI';
-import { prescriptionsAPI } from '../reducers/Venues/venuesAPI';
-import { paymentsAPI } from '../reducers/payments/paymentsAPI';
 
 const persistConfig = {
   key: 'root',
@@ -22,11 +17,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
   [usersAPI.reducerPath]: usersAPI.reducer,
   [loginAPI.reducerPath]: loginAPI.reducer,
-  [doctorsAPI.reducerPath]: doctorsAPI.reducer,
-  [appointmentsAPI.reducerPath]: appointmentsAPI.reducer,
-  [complaintsAPI.reducerPath]: complaintsAPI.reducer,
-  [prescriptionsAPI.reducerPath]: prescriptionsAPI.reducer,
-  [paymentsAPI.reducerPath]: paymentsAPI.reducer,
   user: userSlice,
 });
 
@@ -40,11 +30,6 @@ export const store = configureStore({
     })
       .concat(usersAPI.middleware)
       .concat(loginAPI.middleware)
-      .concat(doctorsAPI.middleware)
-      .concat(appointmentsAPI.middleware)
-      .concat(complaintsAPI.middleware)
-      .concat(prescriptionsAPI.middleware)
-      .concat(paymentsAPI.middleware),
 });
 
 export const persistedStore = persistStore(store);

@@ -2,77 +2,66 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiDomain } from "../../utils/ApiDomain";
 import type { RootState } from "../../app/store";
 
-export type TPrescription = {
-  prescriptionId: number;
-  appointmentId: number;
-  doctorId: number;
-  patientId: number;
-  notes: string;
-  amount: string; // stored as string because it's a PostgreSQL numeric
-  createdAt?: string;
-  updatedAt?: string;
-};
 
-export const prescriptionsAPI = createApi({
-  reducerPath: "prescriptionsAPI",
+export type TVenue = {
+    VenueID: number;
+    venueName: string;
+    address: string;
+    image_url: string;
+    capacity: string;
+    createdAt: string;
+}
+
+export const venuesAPI = createApi({
+  reducerPath: "venuesAPI",
   baseQuery: fetchBaseQuery({
     baseUrl: ApiDomain,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).user.token;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
+      // const token = (getState() as RootState).user.token;
+      // if (token) {
+      //   headers.set("Authorization", `Bearer ${token}`);
+      // }
       headers.set("Content-Type", "application/json");
       return headers;
     },
   }),
   tagTypes: ["Prescriptions"],
   endpoints: (builder) => ({
-    // POST /prescription/register
-    createPrescription: builder.mutation<TPrescription, Partial<TPrescription>>({
-      query: (newPrescription) => ({
-        url: "/prescription/register",
+    // POST New Venue
+    createVenue: builder.mutation<TVenue, Partial<TVenue>>({
+      query: (newVenue) => ({
+        url: "/venue/newVenue",
         method: "POST",
-        body: newPrescription,
+        body: newVenue,
       }),
       invalidatesTags: ["Prescriptions"],
     }),
 
-    // GET /prescriptions
-    getPrescriptions: builder.query<{ data: TPrescription[] }, void>({
-      query: () => "/prescriptions",
+    // GET all Venues
+    getAllVenues: builder.query<{ data: TVenue[] }, void>({
+      query: () => "/venue/allVenues",
       providesTags: ["Prescriptions"],
     }),
 
-    // GET /prescription/:id
-    getPrescriptionById: builder.query<{ data: TPrescription }, number>({
-      query: (id) => `/prescription/${id}`,
+    // GET Venue by ID
+    getVenueById: builder.query<{ data: TVenue }, number>({
+      query: (id) => `/venue/${id}`,
     }),
 
-    // GET /prescriptions/patient/:patientId
-    getPrescriptionsByPatientId: builder.query<{ data: TPrescription[] }, number>({
-      query: (patientId) => `/prescriptions/patient/${patientId}`,
-    }),
-
-    // GET /prescriptions/doctor/:doctorId
-    getPrescriptionsByDoctorId: builder.query<{ data: TPrescription[] }, number>({
-      query: (doctorId) => `/prescriptions/doctor/${doctorId}`,
-    }),
-
-    // PUT /prescription/:id
-    updatePrescription: builder.mutation<TPrescription, Partial<TPrescription> & { id: number }>({
+    // PATCH Update Venue by id
+    updateVenue: builder.mutation<TVenue, Partial<TVenue> & { id: number }>({
       query: ({ id, ...rest }) => ({
-        url: `/prescription/${id}`,
-        method: "PUT",
+        url: `/venue/update/${id}`,
+        method: "PATCH",
         body: rest,
       }),
       invalidatesTags: ["Prescriptions"],
     }),
 
-    // DELETE /prescription/:id
-    deletePrescription: builder.mutation<{ message: string }, number>({
+    // DELETE Venue by ID
+    deleteVenue: builder.mutation<{ message: string }, number>({
       query: (id) => ({
-        url: `/prescription/${id}`,
+        url: `/Venue/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Prescriptions"],
@@ -81,11 +70,8 @@ export const prescriptionsAPI = createApi({
 });
 
 export const {
-  useCreatePrescriptionMutation,
-  useGetPrescriptionsQuery,
-  useGetPrescriptionByIdQuery,
-  useGetPrescriptionsByPatientIdQuery,
-  useGetPrescriptionsByDoctorIdQuery,
-  useUpdatePrescriptionMutation,
-  useDeletePrescriptionMutation,
-} = prescriptionsAPI;
+  useCreateVenueMutation,
+  useGetVenueByIdQuery,
+  useUpdateVenueMutation,
+  useDeleteVenueMutation,
+} = venuesAPI;

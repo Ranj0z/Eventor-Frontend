@@ -20,7 +20,10 @@ export const UsersTable = pgTable("user", {
     password: varchar ("password", ).notNull(),
     role: RoleEnum("role").default("user"),
     isVerified: boolean("is_verified").default(false),
-    verificationCode: varchar("verification_code", {length: 10})
+    verificationCode: varchar("verification_code", {length: 10}),
+    image_url: varchar("image_url"),
+    createdAt: date("date_created"),
+    updatedAt: date("date_updated")
     }
 )
 

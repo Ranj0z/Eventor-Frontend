@@ -3,14 +3,14 @@ import { ApiDomain } from "../../utils/ApiDomain";
 import type { RootState } from "../../app/store";
 
 export type TUser = {
-  id: number;
+  UserID: number;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  contactPhone?: string;
-  address?: string;
-  role: "admin" | "doctor" | "user";
+  phoneNumber: string;
+  address: string;
+  role: "admin" | "host" | "user";
   isVerified: boolean;
   image_url: string;
   verificationCode?: string;
@@ -23,10 +23,10 @@ export const usersAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: ApiDomain,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).user.token;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
+      // const token = (getState() as RootState).user.token;
+      // if (token) {
+      //   headers.set("Authorization", `Bearer ${token}`);
+      // }
       headers.set("Content-Type", "application/json");
       return headers;
     },
@@ -54,29 +54,39 @@ export const usersAPI = createApi({
 
     // GET /users
     getUsers: builder.query<{ data: TUser[] }, void>({
-      query: () => "/users",
+      query: () => "/User/allUsers",
       providesTags: ["Users"],
     }),
 
     // GET /user/:id
     getUserById: builder.query<{ data: TUser[] }, number>({
-      query: (id) => `/user/${id}`,
+      query: (id) => `/User/${id}`,
     }),
 
-    // PUT /user/:id
+    // PATCH /user/:id
     updateUser: builder.mutation<TUser, Partial<TUser> & { id: number }>({
       query: ({ id, ...rest }) => ({
-        url: `/user/${id}`,
-        method: "PUT",
+        url: `/User/update/${id}`,
+        method: "PATCH",
         body: rest,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    
+    // PATCH uPDATE USER ROLE TO hOST
+    updateuserToHost: builder.mutation<{ message: string }, { id: number }>({
+      query: ({ id  }) => ({
+        url: `/User/updatetohost/${id}`,
+        method: "PATCH",
+        body: { role: "host" },
       }),
       invalidatesTags: ["Users"],
     }),
 
     // DELETE /user/:id
-    deleteUser: builder.mutation<{ message: string }, number>({
+    deleteUser: builder.mutation<{ message: string }, { id: number }>({
       query: (id) => ({
-        url: `/user/${id}`,
+        url: `/User/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Users"],

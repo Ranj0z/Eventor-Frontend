@@ -1,12 +1,12 @@
 import Footer from "../components/footer/Footer"
-import Hero  from "../components/home/Hero"
+import HeroTry1 from "../components/home/try"
 import Navbar from "../components/nav/Navbar"
 
 const LandingPage = () => {
     return (
         <div>
             <Navbar />
-            <Hero />     
+            <HeroTry1 />     
             <Footer />
 
         </div>

@@ -5,13 +5,7 @@ import LandingPage from './pages/LandingPage'
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 import AboutPage from './pages/AboutPage'
-<<<<<<< HEAD
-import Events from './pages/Events'
-=======
-import Appointment from './pages/Appointment'
-import PaymentSuccess from './pages/payment/PaymentSuccess'
-import PaymentCancelled from './pages/payment/PaymentCancelled'
->>>>>>> e48e6a0c95d07dcd32a81e533f0620f1e2179572
+// import Events from './pages/Events'
 // import AdminDashboard from './dashboard/AdminDashboard/AdminDashboard'
 import Error from './components/error/Error'
 import VerifyUser from './pages/auth/VerifyUser'
@@ -20,13 +14,17 @@ import { Toaster } from 'sonner'
 // import Profile from './dashboard/AdminDashboard/Profile'
 import { type RootState } from './app/store'
 import { useSelector } from 'react-redux'
+import FeaturesPage from './pages/FeaturesPages'
+import EventsPage from './pages/Events'
+import VenuesPage from './pages/VenuesPage'
+import RSVPPage from './pages/RSVPPage'
 // import UserProfile from './dashboard/UserDashboard/UserProfile'
 // import UserDashboard from './dashboard/UserDashboard/UserDashboard'
 
 
 function App() {
-  const isAdmin = useSelector((state: RootState) => state.user.user?.role === 'admin');
-  const isUser = useSelector((state: RootState) => state.user.user?.role === 'user');
+  // const isAdmin = useSelector((state: RootState) => state.user.user?.role === 'admin');
+  // const isUser = useSelector((state: RootState) => state.user.user?.role === 'user');
 
   const router = createBrowserRouter([
     {
@@ -34,7 +32,7 @@ function App() {
       element: <LandingPage />,
     },
     {
-      path: '/',
+      path: '/about',
       element: <AboutPage />
     },
     {
@@ -50,8 +48,20 @@ function App() {
       element: <Login />
     },
     {
+      path: '/backstage/features',
+      element: <FeaturesPage />
+    },
+    {
       path: '/events',
-      element: <Events />
+      element: <EventsPage />
+    },
+    {
+      path: '/rsvp',
+      element: <RSVPPage />
+    },
+    {
+      path: '/venues',
+      element: <VenuesPage />
     },
     // Admin Dashboard Routes
     // {
@@ -92,14 +102,14 @@ function App() {
     //     },
     //   ]
     // },
-    {
-      path: '/payment-success',
-      element: <PaymentSuccess />
-    },
-    {
-      path: '/payment-cancelled',
-      element: <PaymentCancelled />
-    },
+    // {
+    //   path: '/payment-success',
+    //   element: <PaymentSuccess />
+    // },
+    // {
+    //   path: '/payment-cancelled',
+    //   element: <PaymentCancelled />
+    // },
     {
       path: '*',
       element: <Error />

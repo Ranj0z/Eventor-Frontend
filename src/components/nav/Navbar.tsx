@@ -64,10 +64,28 @@ const Navbar = () => {
               Home
             </a>
             <a 
-              onClick={() => navigateTo('/')} 
+              onClick={() => navigateTo('/about')} 
               className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
             >
               About
+            </a>
+            <a 
+              onClick={() => navigateTo('/events')} 
+              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
+            >
+              Events
+            </a>
+            <a 
+              onClick={() => navigateTo('/venues')} 
+              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
+            >
+              Venues
+            </a>
+            <a 
+              onClick={() => navigateTo('/rsvp')} 
+              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
+            >
+              RSVP
             </a>
             <a 
               href="#services" 

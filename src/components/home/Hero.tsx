@@ -1,21 +1,20 @@
-import {
-  Heart,
-  Calendar,
-  Shield,
-  Clock,
-  Star,
-  ArrowRight,
-  Phone,
-  MapPin,
-  Mail,
-  Award,
-  Users,
-  CheckCircle
-} from 'lucide-react';
+// import {
+//   Heart,
+//   Calendar,
+//   Shield,
+//   Clock,
+//   Star,
+//   ArrowRight,
+//   Phone,
+//   MapPin,
+//   Mail,
+//   Award,
+//   Users,
+//   CheckCircle
+// } from 'lucide-react';
 
-import { services } from './data/services';
-import { testimonials } from './data/testimonials';
-import { useGetDoctorsQuery, type TDoctor } from '../../../src/reducers/doctors/doctorsAPI';
+// import { services } from './data/services';
+// import { testimonials } from './data/testimonials';
 import { useNavigate } from 'react-router';
 
 

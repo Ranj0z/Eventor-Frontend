@@ -82,16 +82,13 @@ export const eventsAPI = createApi({
   }),
 });
 
+// ... your eventsAPI definition ...
+
 export const {
-  
-  // useCreateAppointmentMutation,
-  // useGetAppointmentsQuery,
-  // useGetDetailedAppointmentsQuery,
-  // useGetAppointmentByIdQuery,
-  // useGetAppointmentsByUserIdQuery,
-  // useGetAppointmentsByDoctorIdQuery,
-  // useGetAppointmentsByStatusQuery,
-  // useUpdateAppointmentMutation,
-  // useUpdateAppointmentStatusMutation,
-  // useDeleteAppointmentMutation,
+  useCreateEventMutation,
+  useGetAllEventsQuery,
+  useGetEventByIdQuery,
+  useGetEventsByVenueIdQuery,
+  useUpdateEventMutation,
+  useDeleteEventMutation,
 } = eventsAPI;

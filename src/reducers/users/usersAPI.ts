@@ -44,7 +44,7 @@ export const usersAPI = createApi({
     }),
 
     // POST /auth/verify
-    verifyUser: builder.mutation<{ message: string }, { email: string; code: string }>({
+    verifyUser: builder.mutation<{ message: string }, { email: string; verificationCode: string }>({
       query: (data) => ({
         url: "/auth/verify",
         method: "POST",

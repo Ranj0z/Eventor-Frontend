@@ -1,19 +1,19 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { usersAPI } from '../../../src/reducers/users/usersAPI';
+import { usersAPI } from '../../reducers/Users/usersAPI';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { LogIn } from 'lucide-react';
 
 type VerifyInputs = {
     email: string;
-    code: string;
+    verificationCode: string;
 };
 
 const schema = yup.object({
     email: yup.string().email('Invalid email').required('Email is required'),
-    code: yup
+    verificationCode: yup
         .string()
         .matches(/^\d{6}$/, 'Code must be a 6 digit number')
         .required('Verification code is required'),
@@ -38,6 +38,7 @@ const VerifyUser = () => {
     });
 
     const onSubmit: SubmitHandler<VerifyInputs> = async (data) => {
+        console.log(data)
         try {
             const response = await verifyUser(data).unwrap();
             console.log("Verification response:", response);
@@ -128,13 +129,13 @@ const VerifyUser = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        {...register('code')}
-                                        placeholder="Enter 6-digit code"
+                                        {...register('verificationCode')}
+                                        placeholder="Enter 6-digit verificationCode"
                                         maxLength={6}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-lg text-center tracking-widest font-mono"
                                     />
-                                    {errors.code && (
-                                        <span className="text-red-600 text-sm mt-1 block">{errors.code.message}</span>
+                                    {errors.verificationCode && (
+                                        <span className="text-red-600 text-sm mt-1 block">{errors.verificationCode.message}</span>
                                     )}
                                 </div>
 

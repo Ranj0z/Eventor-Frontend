@@ -5,21 +5,18 @@ import LandingPage from './pages/LandingPage'
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 import AboutPage from './pages/AboutPage'
-// import Events from './pages/Events'
-// import AdminDashboard from './dashboard/AdminDashboard/AdminDashboard'
 import Error from './components/error/Error'
 import VerifyUser from './pages/auth/VerifyUser'
 import { Toaster } from 'sonner'
-// import Users from './dashboard/AdminDashboard/manageUsers/Users'
-// import Profile from './dashboard/AdminDashboard/Profile'
 import { type RootState } from './app/store'
 import { useSelector } from 'react-redux'
 import FeaturesPage from './pages/FeaturesPages'
 import EventsPage from './pages/Events'
 import VenuesPage from './pages/VenuesPage'
 import RSVPPage from './pages/RSVPPage'
-// import UserProfile from './dashboard/UserDashboard/UserProfile'
-// import UserDashboard from './dashboard/UserDashboard/UserDashboard'
+import AdminDashboard from './pages/Dashboard/adminDashboard/Dashboard'
+import UserDashboard from './pages/Dashboard/userDashboard/Dashboard'
+import HostDashboard from './pages/Dashboard/hostDashboard/Dashboard'
 
 
 function App() {
@@ -63,53 +60,67 @@ function App() {
       path: '/venues',
       element: <VenuesPage />
     },
-    // Admin Dashboard Routes
-    // {
-    //   path: '/admin/dashboard',
-    //   element: isAdmin ? <AdminDashboard /> : <Login />,
-    //   children: [
-    //     {
-    //       path: 'analytics',
-    //       element: <h1>Analytics</h1>
-    //     },
-    //     {
-    //       path: 'users',
-    //       element: <Users />
-    //     },
-    //     {
-    //       path: 'profile',
-    //       element: <Profile />
-    //     },
-    //   ]
-    // },
 
-    // // User dashboard routes
-    // {
-    //   path: '/user/dashboard',
-    //   element: isUser ? <UserDashboard /> : <Login />,
-    //   children: [
-    //     {
-    //       path: 'analytics',
-    //       element: <h1>Analytics</h1>
-    //     },
-    //     {
-    //       path: 'todos',
-    //       element: <UserTodos />
-    //     },
-    //     {
-    //       path: 'profile',
-    //       element: <UserProfile />
-    //     },
-    //   ]
-    // },
-    // {
-    //   path: '/payment-success',
-    //   element: <PaymentSuccess />
-    // },
-    // {
-    //   path: '/payment-cancelled',
-    //   element: <PaymentCancelled />
-    // },
+    {
+      path: '/admin/dashboard',
+      element: <AdminDashboard />,
+      children: [
+        {
+          path: 'users',
+          element: <h1>Users</h1>,
+        },
+        {
+          path: 'events',
+          element: <h1>Events</h1>,
+        },
+        {
+          path: 'venues',
+          element: <h1>Venues</h1>,
+        },
+        {
+          path: 'rsvps',
+          element: <h1>RSVPs</h1>,
+        },
+        {
+          path: 'payments',
+          element: <h1>Payments</h1>,
+        },
+        {
+          path: 'support-tickets',
+          element: <h1>Support Tickets</h1>,
+        },
+        {
+          path: 'analytics',
+          element: <h1>Analytics</h1>,
+        },
+        {
+          path: 'profile',
+          element: <h1>Profile</h1>,
+        },
+      ],
+    },
+    {
+      path: '/host/dashboard',
+      element: <HostDashboard />,
+      children: [
+        { path: 'my-events', element: <h1>My Events</h1> },
+        { path: 'create-event', element: <h1>Create Event</h1> },
+        { path: 'rsvps', element: <h1>RSVPs</h1> },
+        { path: 'payments', element: <h1>Payments</h1> },
+        { path: 'profile', element: <h1>Profile</h1> },
+      ],
+    },
+    {
+      path: '/user/dashboard',
+      element: <UserDashboard />,
+      children: [
+        { path: 'my-tickets', element: <h1>My Tickets</h1> },
+        { path: 'my-rsvps', element: <h1>My RSVPs</h1> },
+        { path: 'event-history', element: <h1>Event History</h1> },
+        { path: 'support', element: <h1>Support</h1> },
+        { path: 'profile', element: <h1>Profile</h1> },
+      ],
+    },
     {
       path: '*',
       element: <Error />

@@ -6,8 +6,8 @@ import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocation, useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { loginAPI } from '../../../src/reducers/login/loginAPI';
-import { loginSuccess } from '../../../src/reducers/login/userSlice';
+import { loginAPI } from '../../reducers/Login/loginAPI';
+import { loginSuccess } from '../../reducers/Login/userSlice';
 
 type LoginInputs = {
     email: string;
@@ -51,11 +51,11 @@ function Login() {
             toast.success("Login successful!");
 
             if (response.user.role === 'admin') {
-                navigate('/admin/dashboard/users');
-            } else if (response.user.role === 'doctor') {
-                navigate('/doctor/dashboard/appointments');
+                navigate('/admin/dashboard');
+            } else if (response.user.role === 'host') {
+                navigate('/host/dashboard');
             } else if (response.user.role === 'user') {
-                navigate('/user/dashboard/appointments');
+                navigate('/user/dashboard');
             }
 
         } catch (error) {

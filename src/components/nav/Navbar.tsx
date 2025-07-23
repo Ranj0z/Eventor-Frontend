@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Menu, X, Phone, MapPin, Heart, Calendar, User } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../../src/app/store';
-import { logout } from '../../../src/reducers/login/userSlice';
+import { logout } from '../../reducers/Login/userSlice';
 import { useNavigate } from 'react-router';
 
 const Navbar = () => {
@@ -17,11 +17,11 @@ const Navbar = () => {
   const role = user?.role;
 
   const dashboardPath = role === 'admin'
-    ? '/admin/dashboard/users'
-    : role === 'doctor'
-    ? '/doctor/dashboard/appointments'
+    ? '/admin/dashboard'
+    : role === 'host'
+    ? '/host/dashboard'
     : role === 'user'
-    ? '/user/dashboard/appointments'
+    ? '/user/dashboard'
     : '/login';
 
   const handleLogout = () => {

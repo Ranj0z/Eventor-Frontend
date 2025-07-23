@@ -1,11 +1,15 @@
+// src/app/store.ts
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import userSlice from '../reducers/login/userSlice';
+import userSlice from '../reducers/Login/userSlice';
 
-import { usersAPI } from '../reducers/users/usersAPI';
-import { loginAPI } from '../reducers/login/loginAPI';
+import { usersAPI } from '../reducers/Users/usersAPI';
+import { loginAPI } from '../reducers/Login/loginAPI';
+import { eventsAPI } from '../reducers/Events/eventsAPI';
+import { paymentsAPI } from '../reducers/Payments/paymentsAPI';
+import { rsvpAPI } from '../reducers/RSVP/rsvpAPI';
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +21,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
   [usersAPI.reducerPath]: usersAPI.reducer,
   [loginAPI.reducerPath]: loginAPI.reducer,
+  [eventsAPI.reducerPath]: eventsAPI.reducer,
+  [paymentsAPI.reducerPath]: paymentsAPI.reducer,
+  [rsvpAPI.reducerPath]: rsvpAPI.reducer,
   user: userSlice,
 });
 
@@ -30,6 +37,9 @@ export const store = configureStore({
     })
       .concat(usersAPI.middleware)
       .concat(loginAPI.middleware)
+      .concat(eventsAPI.middleware)
+      .concat(paymentsAPI.middleware)
+      .concat(rsvpAPI.middleware),
 });
 
 export const persistedStore = persistStore(store);

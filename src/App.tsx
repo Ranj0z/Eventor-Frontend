@@ -13,10 +13,15 @@ import { useSelector } from 'react-redux'
 import FeaturesPage from './pages/FeaturesPages'
 import EventsPage from './pages/Events'
 import VenuesPage from './pages/VenuesPage'
-import RSVPPage from './pages/RSVPPage'
 import AdminDashboard from './pages/Dashboard/adminDashboard/Dashboard'
 import UserDashboard from './pages/Dashboard/userDashboard/Dashboard'
 import HostDashboard from './pages/Dashboard/hostDashboard/Dashboard'
+import EventsSection from './components/events/EventsSection'
+import VenuesSection from './components/venues/VenuesSection'
+import RSVPsection from './components/rsvp/RSVPsection'
+import Profile from './components/user/userProfile'
+import UserSection from './components/user/UserSection'
+import AnalyticsSection from './components/analytics/AnalyticsSection'
 
 
 function App() {
@@ -54,7 +59,7 @@ function App() {
     },
     {
       path: '/rsvp',
-      element: <RSVPPage />
+      element: <RSVPsection />
     },
     {
       path: '/venues',
@@ -67,19 +72,19 @@ function App() {
       children: [
         {
           path: 'users',
-          element: <h1>Users</h1>,
+          element: <UserSection />,
         },
         {
           path: 'events',
-          element: <h1>Events</h1>,
+          element: <EventsSection />,
         },
         {
           path: 'venues',
-          element: <h1>Venues</h1>,
+          element: <VenuesSection />,
         },
         {
           path: 'rsvps',
-          element: <h1>RSVPs</h1>,
+          element: <RSVPsection />,
         },
         {
           path: 'payments',
@@ -91,11 +96,11 @@ function App() {
         },
         {
           path: 'analytics',
-          element: <h1>Analytics</h1>,
+          element: <AnalyticsSection />,
         },
         {
           path: 'profile',
-          element: <h1>Profile</h1>,
+          element: <Profile />,
         },
       ],
     },

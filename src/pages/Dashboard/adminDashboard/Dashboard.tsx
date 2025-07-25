@@ -1,4 +1,6 @@
-import { useState } from "react";
+// src/pages/Dashboard/adminDashboard/Dashboard.tsx
+
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import AdminDrawer from "./aside/AdminDrawer";
 import { FaBars } from "react-icons/fa";
@@ -7,60 +9,72 @@ import Footer from "../../../components/footer/Footer";
 import Navbar from "../../../components/nav/Navbar";
 
 const AdminDashboard = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(() =>
+    window.innerWidth >= 1024
+  );
 
-  const handleDrawerToggle = () => {
-    setDrawerOpen((prev) => !prev);
-  };
+  const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setDrawerOpen(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-black">
-      {/* Navbar */}
+    <div className="flex flex-col min-h-screen overflow-x-hidden bg-purple-300">
       <Navbar />
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`
-            bg-purple-700 text-white w-64 
-            lg:block ${drawerOpen ? "block fixed z-50 h-full" : "hidden"} 
-            lg:static
-          `}
+          className={`bg-purple-700 text-white transition-all duration-300 h-full ${
+            drawerOpen ? "w-64 min-w-[16rem]" : "w-0 overflow-hidden"
+          }`}
         >
           <div className="relative h-full">
-            <button
-              className="absolute top-4 right-4 text-white text-2xl lg:hidden"
-              onClick={handleDrawerToggle}
-            >
-              <IoCloseSharp />
-            </button>
-            <AdminDrawer />
+            {drawerOpen && (
+              <>
+                <button
+                  className="absolute top-4 right-4 text-white text-2xl lg:block"
+                  onClick={handleDrawerToggle}
+                >
+                  <IoCloseSharp />
+                </button>
+                <AdminDrawer />
+              </>
+            )}
           </div>
         </aside>
 
-        {/* Main Content Area */}
-        <div className="flex flex-col flex-1">
-          {/* Top bar */}
-          <div className="flex items-center px-4 py-4 bg-purple-700 shadow">
-            <button
-              className="mr-4 text-white text-2xl lg:hidden"
-              onClick={handleDrawerToggle}
-            >
-              {drawerOpen ? <IoCloseSharp /> : <FaBars />}
-            </button>
-            <h1 className="text-yellow-400 text-2xl font-bold tracking-wide">
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 overflow-hidden">
+          {/* Header + Toggle */}
+          <div className="flex items-center px-4 py-4 bg-purple-700 shadow z-10">
+            {!drawerOpen && (
+              <button
+                className="mr-4 text-white text-2xl"
+                onClick={handleDrawerToggle}
+              >
+                <FaBars />
+              </button>
+            )}
+            <h1 className="text-yellow-400 text-lg sm:text-xl font-bold tracking-wide">
               Welcome to your Admin Dashboard
             </h1>
           </div>
 
-          {/* Routed content */}
-          <main className="flex-1 bg-gray-50 p-6 text-black">
+          {/* Page Content */}
+          <main className="flex-1 overflow-y-auto bg-gray-50 text-black">
             <Outlet />
           </main>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

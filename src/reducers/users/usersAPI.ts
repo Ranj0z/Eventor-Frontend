@@ -17,7 +17,6 @@ export type TUser = {
   createdAt?: string;
   updatedAt?: string;
 };
-
 export const usersAPI = createApi({
   reducerPath: "usersAPI",
   baseQuery: fetchBaseQuery({
@@ -73,10 +72,30 @@ export const usersAPI = createApi({
       invalidatesTags: ["Users"],
     }),
     
-    // PATCH uPDATE USER ROLE TO hOST
+    // PATCH UPDATE USER ROLE TO hOST
     updateuserToHost: builder.mutation<{ message: string }, { id: number }>({
       query: ({ id  }) => ({
         url: `/User/updatetohost/${id}`,
+        method: "PATCH",
+        body: { role: "host" },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    
+    // PATCH UPDATE USER ROLE TO admin
+    updateuserToAdmin: builder.mutation<{ message: string }, { id: number }>({
+      query: ({ id  }) => ({
+        url: `/User/updatetoadmin/${id}`,
+        method: "PATCH",
+        body: { role: "admin" },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    
+    // PATCH UPDATE USER ROLE TO hOST
+    downgradeAdminToHost: builder.mutation<{ message: string }, { id: number }>({
+      query: ({ id  }) => ({
+        url: `/User/downgradetouser/${id}`,
         method: "PATCH",
         body: { role: "host" },
       }),

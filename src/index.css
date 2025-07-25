@@ -2,3 +2,4 @@
 @plugin "daisyui" {
    themes: false;
  }
+ @tailwindcss/line-clamp

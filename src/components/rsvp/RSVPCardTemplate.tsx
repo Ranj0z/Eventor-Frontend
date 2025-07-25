@@ -25,7 +25,7 @@ const getBgColorByEvent = (eventID: number): string => {
     10: "bg-indigo-100",
   };
 
-  return colorMap[eventID] || "bg-gray-100"; // fallback color
+  return colorMap[eventID] || "bg-gray-100";
 };
 
 const getStatusColor = (status: string): string => {
@@ -46,11 +46,10 @@ const RSVPCardTemplate: React.FC<RSVPCardProps> = ({ reservation }) => {
   const statusColor = getStatusColor(reservation.RSVPStatus);
 
   return (
-    <div className={`${bgColor} rounded-xl shadow-md p-4 h-full`}>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-        {/* Event Row with vertical alignment */}
-        <div className="font-medium flex items-center">Event:</div>
-        <div className="font-bold text-gray-800">{reservation.eventTitle}</div>
+    <div className={`${bgColor} rounded-xl shadow-md p-4`}>
+      <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-sm">
+        <p className="font-medium">Event:</p>
+        <p className="font-bold text-gray-800 line-clamp-2 break-words">{reservation.eventTitle}</p>
 
         <p className="font-medium">User:</p>
         <p>{reservation.userName}</p>

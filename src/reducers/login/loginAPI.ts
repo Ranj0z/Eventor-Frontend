@@ -4,13 +4,20 @@ import { ApiDomain } from "../../utils/ApiDomain";
 export type TLoginResponse = {
     token: string;
     user: {
-    user_id: number;
-    first_name: string;
-    last_name: string;
-    email: string;
-    role: string;
-    isVerified: boolean;
-  };
+        UserID: number;
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        phoneNumber: string;
+        address: string;
+        role: "admin" | "host" | "user";
+        isVerified: boolean;
+        image_url: string;
+        verificationCode?: string;
+        createdAt?: string;
+        updatedAt?: string;
+    };
 }
 
 type LoginInputs = {

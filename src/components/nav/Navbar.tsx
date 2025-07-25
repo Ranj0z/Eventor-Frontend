@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, ChevronDown } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../../src/app/store';
 import { logout } from '../../reducers/Login/userSlice';
@@ -55,43 +55,14 @@ const Navbar = () => {
             </div>
           </div>
 
+
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6 relative">
             <a 
               onClick={() => navigateTo('/')} 
               className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
             >
               Home
-            </a>
-            <a 
-              onClick={() => navigateTo('/about')} 
-              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
-            >
-              About
-            </a>
-            <a 
-              onClick={() => navigateTo('/events')} 
-              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
-            >
-              Events
-            </a>
-            <a 
-              onClick={() => navigateTo('/venues')} 
-              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
-            >
-              Venues
-            </a>
-            <a 
-              onClick={() => navigateTo('/rsvp')} 
-              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
-            >
-              RSVP
-            </a>
-            <a 
-              href="#services" 
-              className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
-            >
-              Services
             </a>
 
             {isLoggedIn && (
@@ -133,6 +104,38 @@ const Navbar = () => {
               </div>
             )}
 
+            {/* More dropdown */}
+            <div className="group relative">
+              <button className="flex items-center gap-1 text-gray-700 hover:text-blue-600 font-medium">
+                More <ChevronDown className="w-4 h-4" />
+              </button>
+              <div className="absolute right-0 top-full mt-2 hidden group-hover:block bg-white shadow-lg rounded-md w-40 py-2 z-50">
+                <a
+                  onClick={() => navigateTo('/about')}
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
+                  About
+                </a>
+                <a
+                  onClick={() => navigateTo('/venues')}
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
+                  Venues
+                </a>
+                <a
+                  onClick={() => navigateTo('/rsvp')}
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
+                  RSVP
+                </a>
+                <a
+                  href="#services"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
+                  Services
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}

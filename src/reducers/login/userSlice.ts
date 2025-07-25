@@ -1,15 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { TUser } from "../Users/usersAPI";
 
 export type UserState = {
   token: string | null;
-  user: {
-    user_id: number;
-    first_name: string;
-    last_name: string;
-    email: string;
-    role: string;
-    isVerified: boolean;
-  } | null;
+  user: TUser | null;
 };
 
 const initialState: UserState = {
@@ -21,7 +15,10 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginSuccess: (state, action) => {
+    loginSuccess: (
+      state,
+      action: PayloadAction<{ token: string; user: TUser }>
+    ) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
     },

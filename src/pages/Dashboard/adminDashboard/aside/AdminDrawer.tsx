@@ -1,3 +1,6 @@
+// src\pages\Dashboard\adminDashboard\aside\AdminDrawer.tsx
+
+
 import { Link } from "react-router";
 import { adminDrawerData } from "./drawerData";
 

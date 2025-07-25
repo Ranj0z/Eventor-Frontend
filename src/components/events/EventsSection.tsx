@@ -1,7 +1,6 @@
 import React from "react";
 import EventCard from "./EventCardTemplate";
-import { EventsData } from "./Events.data";
-import { venueMap } from "./Events.data"; // Assuming you moved it here
+import { EventsData, venueMap } from "./Events.data";
 
 // Utility functions
 const isToday = (dateStr: string) => {
@@ -40,12 +39,14 @@ const EventsSection: React.FC = () => {
     if (hideIfEmpty && events.length === 0) return null;
 
     return (
-      <div className="mb-16">
-        <h2 className={`text-2xl font-semibold mb-6 ${color}`}>{title}</h2>
+      <section className="mb-12">
+        <h2 className={`text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 ${color}`}>
+          {title}
+        </h2>
         {events.length === 0 ? (
           <p className="text-gray-500 italic">No events in this category.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {events.map((event) => (
               <EventCard
                 key={event.EventID}
@@ -63,16 +64,18 @@ const EventsSection: React.FC = () => {
             ))}
           </div>
         )}
-      </div>
+      </section>
     );
   };
 
   return (
-    <div className="min-h-screen h-auto overflow-y-auto bg-gray-50 py-12 px-6">
+    <div className="min-h-screen h-auto overflow-y-auto bg-gray-50 px-4 sm:px-6 md:px-10 py-8 sm:py-12">
       {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-800">Events We’re Hosting</h1>
-        <p className="text-gray-600 text-lg mt-2">
+      <div className="text-center mb-10 sm:mb-12">
+        <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">
+          Events We’re Hosting
+        </h1>
+        <p className="text-gray-600 text-sm sm:text-lg mt-2">
           Discover and book tickets to upcoming experiences near you.
         </p>
       </div>
@@ -83,9 +86,13 @@ const EventsSection: React.FC = () => {
       {renderSection("Past Events", pastEvents, "text-red-600", true)}
 
       {/* If all are empty */}
-      {todayEvents.length === 0 && upcomingEvents.length === 0 && pastEvents.length === 0 && (
-        <p className="text-center text-gray-500 italic">No events available at the moment.</p>
-      )}
+      {todayEvents.length === 0 &&
+        upcomingEvents.length === 0 &&
+        pastEvents.length === 0 && (
+          <p className="text-center text-gray-500 italic">
+            No events available at the moment.
+          </p>
+        )}
     </div>
   );
 };

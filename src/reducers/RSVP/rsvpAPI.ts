@@ -4,14 +4,13 @@ import type { RootState } from '../../app/store';
 
 // Type definition
 export type TRSVP = {
-  id: number;
-  userId: number;
-  eventId: number;
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+  RSVPID: number;
+  UserID: number;
+  EventID: number;
+  RSVPStatus: "Pending" | "Booked" | "Cancelled";
   quantity: number;
-  amountPaid: number;
-  createdAt: string;
-  updatedAt: string;
+  totalAmount: string;
+  RSVPDate: string;
 };
 
 export const rsvpAPI = createApi({
@@ -40,7 +39,7 @@ export const rsvpAPI = createApi({
     }),
 
     // Get all RSVPs
-    getAllRSVPs: builder.query<{ data: TRSVP[] }, void>({
+    getAllRSVPs: builder.query<{ reservations: TRSVP[] }, void>({
       query: () => '/reservation/allRsvps',
       providesTags: ['RSVP'],
     }),

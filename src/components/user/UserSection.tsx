@@ -7,7 +7,7 @@ const UserSection: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="h-screen bg-gray-900 w-full flex flex-col overflow-hidden">
+    <div className="max-h-[70vh]  overflow-y-auto bg-gray-900 w-full flex flex-col overflow-hidden">
       {/* Sticky Header */}
       <div className="sticky top-0 bg-gray-900 z-10 px-4 py-4 flex justify-between items-center border-b border-gray-700 shrink-0">
         <h1 className="text-2xl font-semibold text-white">User Summary</h1>

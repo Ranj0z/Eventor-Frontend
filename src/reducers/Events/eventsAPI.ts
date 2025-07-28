@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiDomain } from "../../utils/ApiDomain";
-import type { RootState } from "../../app/store";
 
 //Events Table
 export type TEvents = {
@@ -8,12 +7,13 @@ export type TEvents = {
     title: string;
     description: string;
     VenueID: number;
-    category: number;
+    category: string;
     date: string;
     time: string;
     ticketsPrice:number;
     totalTickets: number;
     soldTickets: number;
+    image_url: string;  
     createdAt: string;
     updatedAt: string;
 };
@@ -44,7 +44,7 @@ export const eventsAPI = createApi({
     }),
 
     // GET All Events
-    getAllEvents: builder.query<{ data: TEvents[] }, void>({
+    getAllEvents: builder.query<{ Events: TEvents[] }, void>({
       query: () => "/event/allevents",
       providesTags: ["Events"],
     }),

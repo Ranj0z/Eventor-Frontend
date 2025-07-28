@@ -10,6 +10,8 @@ import { loginAPI } from '../reducers/Login/loginAPI';
 import { eventsAPI } from '../reducers/Events/eventsAPI';
 import { paymentsAPI } from '../reducers/Payments/paymentsAPI';
 import { rsvpAPI } from '../reducers/RSVP/rsvpAPI';
+import { venuesAPI } from '../reducers/Venues/venuesAPI';
+import { ticketsAPI } from '../reducers/Tickets/ticketsAPI'; // Add this import
 
 const persistConfig = {
   key: 'root',
@@ -22,8 +24,10 @@ const rootReducer = combineReducers({
   [usersAPI.reducerPath]: usersAPI.reducer,
   [loginAPI.reducerPath]: loginAPI.reducer,
   [eventsAPI.reducerPath]: eventsAPI.reducer,
+  [venuesAPI.reducerPath]: venuesAPI.reducer,
   [paymentsAPI.reducerPath]: paymentsAPI.reducer,
   [rsvpAPI.reducerPath]: rsvpAPI.reducer,
+  [ticketsAPI.reducerPath]: ticketsAPI.reducer, // Add this line
   user: userSlice,
 });
 
@@ -38,8 +42,10 @@ export const store = configureStore({
       .concat(usersAPI.middleware)
       .concat(loginAPI.middleware)
       .concat(eventsAPI.middleware)
+      .concat(venuesAPI.middleware)
       .concat(paymentsAPI.middleware)
-      .concat(rsvpAPI.middleware),
+      .concat(rsvpAPI.middleware)
+      .concat(ticketsAPI.middleware), // Add this line
 });
 
 export const persistedStore = persistStore(store);

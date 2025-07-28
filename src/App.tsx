@@ -22,6 +22,10 @@ import RSVPsection from './components/rsvp/RSVPsection'
 import Profile from './components/user/userProfile'
 import UserSection from './components/user/UserSection'
 import AnalyticsSection from './components/analytics/AnalyticsSection'
+import UserRSVPSection from './components/rsvp/UserRSVPsection'
+import UserEventsSection from './components/events/UserEventsSection'
+import TicketsSection from './components/customerSupportTickets/TicketsSection'
+import UserTicketsSection from './components/customerSupportTickets/UserTicketsSection'
 
 
 function App() {
@@ -92,7 +96,7 @@ function App() {
         },
         {
           path: 'support-tickets',
-          element: <h1>Support Tickets</h1>,
+          element: <TicketsSection />,
         },
         {
           path: 'analytics',
@@ -109,21 +113,21 @@ function App() {
       element: <HostDashboard />,
       children: [
         { path: 'my-events', element: <h1>My Events</h1> },
-        { path: 'create-event', element: <h1>Create Event</h1> },
+        { path: 'event-history', element: <UserEventsSection /> },
         { path: 'rsvps', element: <h1>RSVPs</h1> },
         { path: 'payments', element: <h1>Payments</h1> },
-        { path: 'profile', element: <h1>Profile</h1> },
+        { path: 'profile', element: < Profile /> },
       ],
     },
     {
       path: '/user/dashboard',
       element: <UserDashboard />,
       children: [
-        { path: 'my-tickets', element: <h1>My Tickets</h1> },
-        { path: 'my-rsvps', element: <h1>My RSVPs</h1> },
-        { path: 'event-history', element: <h1>Event History</h1> },
-        { path: 'support', element: <h1>Support</h1> },
-        { path: 'profile', element: <h1>Profile</h1> },
+        { path: 'events', element: <EventsSection /> },
+        { path: 'my-rsvps', element: <UserRSVPSection /> },
+        { path: 'event-history', element: <UserEventsSection /> },
+        { path: 'support', element: <UserTicketsSection /> },
+        { path: 'profile', element: <Profile /> },
       ],
     },
     {

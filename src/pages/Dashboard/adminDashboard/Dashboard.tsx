@@ -26,7 +26,7 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden bg-purple-300">
+    <div className="flex flex-col max-h-screen overflow-x-hidden bg-purple-300">
       <Navbar />
 
       <div className="flex flex-1 overflow-hidden">

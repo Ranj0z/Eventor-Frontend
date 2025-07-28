@@ -1,8 +1,10 @@
+// src/components/events/EventsSection.tsx
+
 import React from "react";
 import EventCard from "./EventCardTemplate";
-import { EventsData, venueMap } from "./Events.data";
+import { useGetAllEventsQuery, type TEvents } from "../../reducers/Events/eventsAPI";
+import { useGetAllVenuesQuery } from "../../reducers/Venues/venuesAPI";
 
-// Utility functions
 const isToday = (dateStr: string) => {
   const today = new Date();
   const eventDate = new Date(dateStr);
@@ -26,27 +28,47 @@ const isUpcoming = (dateStr: string) => {
 };
 
 const EventsSection: React.FC = () => {
-  const pastEvents = EventsData.filter((event) => isPast(event.date));
-  const todayEvents = EventsData.filter((event) => isToday(event.date));
-  const upcomingEvents = EventsData.filter((event) => isUpcoming(event.date));
+  const {
+    data: eventResponse,
+    isLoading: loadingEvents,
+    error: errorEvents,
+  } = useGetAllEventsQuery();
+
+  const {
+    data: venueResponse,
+    isLoading: loadingVenues,
+    error: errorVenues,
+  } = useGetAllVenuesQuery();
+
+  const events = eventResponse?.Events || [];
+  const venues = venueResponse?.Venues || [];
+
+  const venueMap: Record<number, string> = {};
+  venues.forEach((venue: any) => {
+    venueMap[venue.VenueID] = venue.venueName;
+  });
+
+  const pastEvents = events.filter((event: TEvents) => isPast(event.date));
+  const todayEvents = events.filter((event: TEvents) => isToday(event.date));
+  const upcomingEvents = events.filter((event: TEvents) => isUpcoming(event.date));
 
   const renderSection = (
     title: string,
-    events: typeof EventsData,
+    events: TEvents[],
     color: string,
     hideIfEmpty = false
   ) => {
     if (hideIfEmpty && events.length === 0) return null;
 
     return (
-      <section className="mb-12">
-        <h2 className={`text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 ${color}`}>
+      <section className="mb-8">
+        <h2 className={`text-xl sm:text-2xl font-semibold mb-4 ${color}`}>
           {title}
         </h2>
         {events.length === 0 ? (
           <p className="text-gray-500 italic">No events in this category.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
             {events.map((event) => (
               <EventCard
                 key={event.EventID}
@@ -58,7 +80,10 @@ const EventsSection: React.FC = () => {
                 ticketsPrice={event.ticketsPrice}
                 totalTickets={event.totalTickets}
                 soldTickets={event.soldTickets}
-                image_url={event.image_url}
+                image_url={
+                  event.image_url ||
+                  "https://res.cloudinary.com/dzysb2qhd/image/upload/v1753007171/samples/man-on-a-street.jpg"
+                }
                 venueName={venueMap[event.VenueID] || "Unknown Venue"}
               />
             ))}
@@ -68,10 +93,12 @@ const EventsSection: React.FC = () => {
     );
   };
 
+  const hasAnyEvents = todayEvents.length > 0 || upcomingEvents.length > 0 || pastEvents.length > 0;
+
   return (
-    <div className="min-h-screen h-auto overflow-y-auto bg-gray-50 px-4 sm:px-6 md:px-10 py-8 sm:py-12">
+    <div className="px-4 sm:px-6 md:px-10 py-4">
       {/* Header */}
-      <div className="text-center mb-10 sm:mb-12">
+      <div className="text-center mb-6">
         <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">
           Events We’re Hosting
         </h1>
@@ -80,19 +107,28 @@ const EventsSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Conditional Sections */}
-      {renderSection("Happening Today", todayEvents, "text-blue-600", true)}
-      {renderSection("Upcoming Events", upcomingEvents, "text-green-600", true)}
-      {renderSection("Past Events", pastEvents, "text-red-600", true)}
-
-      {/* If all are empty */}
-      {todayEvents.length === 0 &&
-        upcomingEvents.length === 0 &&
-        pastEvents.length === 0 && (
-          <p className="text-center text-gray-500 italic">
-            No events available at the moment.
+      {/* Scrollable Events Container (70% screen height) */}
+      <div className="h-[75vh] overflow-y-auto pr-1">
+        {loadingEvents || loadingVenues ? (
+          <p className="text-center text-gray-500 italic">Loading events...</p>
+        ) : errorEvents || errorVenues ? (
+          <p className="text-center text-red-500">
+            Error loading events or venues.
           </p>
+        ) : (
+          <>
+            {renderSection("Happening Today", todayEvents, "text-blue-600", true)}
+            {renderSection("Upcoming Events", upcomingEvents, "text-green-600", true)}
+            {renderSection("Past Events", pastEvents, "text-red-600", true)}
+
+            {!hasAnyEvents && (
+              <p className="text-center text-gray-500 italic">
+                No events available at the moment.
+              </p>
+            )}
+          </>
         )}
+      </div>
     </div>
   );
 };

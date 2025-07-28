@@ -23,7 +23,7 @@ const UserDashboard = () => {
   }, [drawerOpen]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-black">
+    <div className="flex flex-col min-h-screen bg-purple-300">
       {/* Navbar */}
       <Navbar />
 
@@ -64,7 +64,7 @@ const UserDashboard = () => {
           </div>
 
           {/* Routed content */}
-          <main className="flex-1 bg-gray-50 p-4 md:p-6 overflow-y-auto text-black">
+          <main className="flex-1 bg-gray-50  overflow-y-auto text-black">
             <Outlet />
           </main>
         </div>

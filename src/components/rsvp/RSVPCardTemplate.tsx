@@ -1,3 +1,7 @@
+// src/components/rsvp/RSVPCardTemplate.tsx
+
+export type FormattedReservation = RSVPCardProps["reservation"];
+
 type RSVPCardProps = {
   reservation: {
     ReservationID: number;
@@ -5,8 +9,8 @@ type RSVPCardProps = {
     userName: string;
     eventTitle: string;
     ReservationDate: string;
-    RSVPStatus: string;
-    totalAmount: string;
+    RSVPStatus?: string; // <-- Make optional
+    totalAmount: number;
     EventID: number;
   };
 };
@@ -28,7 +32,9 @@ const getBgColorByEvent = (eventID: number): string => {
   return colorMap[eventID] || "bg-gray-100";
 };
 
-const getStatusColor = (status: string): string => {
+const getStatusColor = (status?: string): string => {
+  if (!status) return "text-gray-700";
+
   switch (status.toLowerCase()) {
     case "confirmed":
       return "text-green-600 font-semibold";
@@ -46,10 +52,10 @@ const RSVPCardTemplate: React.FC<RSVPCardProps> = ({ reservation }) => {
   const statusColor = getStatusColor(reservation.RSVPStatus);
 
   return (
-    <div className={`${bgColor} rounded-xl shadow-md p-4`}>
-      <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-sm">
+    <div className={`${bgColor} rounded-xl shadow-sm p-4 transition hover:shadow-lg`}>
+      <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-sm text-gray-800">
         <p className="font-medium">Event:</p>
-        <p className="font-bold text-gray-800 line-clamp-2 break-words">{reservation.eventTitle}</p>
+        <p className="font-bold line-clamp-2 break-words">{reservation.eventTitle}</p>
 
         <p className="font-medium">User:</p>
         <p>{reservation.userName}</p>
@@ -61,10 +67,10 @@ const RSVPCardTemplate: React.FC<RSVPCardProps> = ({ reservation }) => {
         <p>{new Date(reservation.ReservationDate).toLocaleDateString()}</p>
 
         <p className="font-medium">Amount:</p>
-        <p>KES {reservation.totalAmount}</p>
+        <p>KES {reservation.totalAmount || 0}</p>
 
         <p className="font-medium">Status:</p>
-        <p className={statusColor}>{reservation.RSVPStatus}</p>
+        <p className={statusColor}>{reservation.RSVPStatus ?? "Unknown"}</p>
       </div>
     </div>
   );

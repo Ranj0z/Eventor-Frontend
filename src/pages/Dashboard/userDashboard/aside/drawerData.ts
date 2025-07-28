@@ -1,7 +1,7 @@
 // pages/Dashboard/userDashboard/aside/drawerData.ts
 
 import type { IconType } from "react-icons";
-import { FaTicketAlt, FaClipboardCheck, FaHistory, FaRegCommentDots, FaUser } from "react-icons/fa";
+import { FaTicketAlt, FaClipboardCheck, FaHistory, FaRegCommentDots, FaUser, FaCalendarAlt } from "react-icons/fa";
 
 export type DrawerData = {
   id: string;
@@ -11,7 +11,12 @@ export type DrawerData = {
 };
 
 export const userDrawerData: DrawerData[] = [
-  { id: "my-tickets", name: "My Tickets", icon: FaTicketAlt, link: "my-tickets" },
+  {
+    id: "events",
+    name: "Events",
+    icon: FaCalendarAlt,
+    link: "events",
+  },
   { id: "my-rsvps", name: "My RSVPs", icon: FaClipboardCheck, link: "my-rsvps" },
   { id: "event-history", name: "Event History", icon: FaHistory, link: "event-history" },
   { id: "support", name: "Support", icon: FaRegCommentDots, link: "support" },

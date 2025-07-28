@@ -2,22 +2,20 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiDomain } from "../../utils/ApiDomain";
 import type { RootState } from "../../app/store";
 
-export type ComplaintStatus = "Open" | "In Progress" | "Resolved" | "Closed";
+export type TicketStatus = "Pending" | "In Progress" | "Resolved" | "Closed";
 
-
-export type TComplaint = {
-  complaintId: number;
-  userId: number;
-  relatedAppointmentId?: number;
+export type TTicket = {
+  TicketID: number;
+  UserID: number;
   subject: string;
   description: string;
-  status: ComplaintStatus;
-  createdAt?: string;
-  updatedAt?: string;
+  ticketStatus: TicketStatus;
+  created_at: string;
+  updated_at?: string;
 };
 
-export const complaintsAPI = createApi({
-  reducerPath: "complaintsAPI",
+export const ticketsAPI = createApi({
+  reducerPath: "ticketsAPI",
   baseQuery: fetchBaseQuery({
     baseUrl: ApiDomain,
     prepareHeaders: (headers, { getState }) => {
@@ -29,77 +27,71 @@ export const complaintsAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Complaints"],
+  tagTypes: ["Tickets"],
   endpoints: (builder) => ({
-    // POST /complaint/register
-    createComplaint: builder.mutation<TComplaint, Partial<TComplaint>>({
-      query: (newComplaint) => ({
-        url: "/complaint/register",
+    // POST /ticket/newTicket
+    createTicket: builder.mutation<TTicket, Partial<TTicket>>({
+      query: (newTicket) => ({
+        url: "/ticket/newTicket",
         method: "POST",
-        body: newComplaint,
+        body: newTicket,
       }),
-      invalidatesTags: ["Complaints"],
+      invalidatesTags: ["Tickets"],
     }),
 
-    // GET /complaints
-    getComplaints: builder.query<{ data: TComplaint[] }, void>({
-      query: () => "/complaints",
-      providesTags: ["Complaints"],
+    // GET /ticket/allTickets
+    getTickets: builder.query<{ message: string; Tickets: TTicket[] }, void>({
+      query: () => "/ticket/allTickets",
+      providesTags: ["Tickets"],
     }),
 
-    // GET /complaint/:id
-    getComplaintById: builder.query<{ data: TComplaint }, number>({
-      query: (id) => `/complaint/${id}`,
+    // GET /ticket/:id
+    getTicketById: builder.query<{ message: string; Tickets: TTicket }, number>({
+      query: (id) => `/ticket/${id}`,
     }),
 
-    // GET /complaints/user/:userId
-    getComplaintsByUserId: builder.query<{ data: TComplaint[] }, number>({
-      query: (userId) => `/complaints/user/${userId}`,
+    // GET /ticket/user/:id
+    getTicketsByUserId: builder.query<{ message: string; Tickets: TTicket[] }, number>({
+      query: (userId) => `/ticket/user/${userId}`,
     }),
 
-    // GET /complaints/status/:status
-    getComplaintsByStatus: builder.query<{ data: TComplaint[] }, ComplaintStatus>({
-      query: (status) => `/complaints/status/${status}`,
-    }),
-
-    // PUT /complaint/:id
-    updateComplaint: builder.mutation<TComplaint, Partial<TComplaint> & { id: number }>({
+    // PATCH /ticket/updateticket/:id
+    updateTicket: builder.mutation<TTicket, Partial<TTicket> & { id: number }>({
       query: ({ id, ...rest }) => ({
-        url: `/complaint/${id}`,
-        method: "PUT",
+        url: `/ticket/updateticket/${id}`,
+        method: "PATCH",
         body: rest,
       }),
-      invalidatesTags: ["Complaints"],
+      invalidatesTags: ["Tickets"],
     }),
 
-    // PATCH /complaint/status/:id
-    updateComplaintStatus: builder.mutation<{ message: string }, { id: number; status: ComplaintStatus }>({
+    // For status updates - using the same update endpoint
+    updateTicketStatus: builder.mutation<{ message: string }, { id: number; status: TicketStatus }>({
       query: ({ id, status }) => ({
-        url: `/complaint/status/${id}`,
+        url: `/ticket/updateticket/${id}`,
         method: "PATCH",
-        body: { status },
+        body: { ticketStatus: status },
       }),
-      invalidatesTags: ["Complaints"],
+      invalidatesTags: ["Tickets"],
     }),
 
-    // DELETE /complaint/:id
-    deleteComplaint: builder.mutation<{ message: string }, number>({
+    // DELETE /ticket/delete/:id
+    deleteTicket: builder.mutation<{ message: string }, number>({
       query: (id) => ({
-        url: `/complaint/${id}`,
+        url: `/ticket/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Complaints"],
+      invalidatesTags: ["Tickets"],
     }),
   }),
 });
 
 export const {
-  useCreateComplaintMutation,
-  useGetComplaintsQuery,
-  useGetComplaintByIdQuery,
-  useGetComplaintsByUserIdQuery,
-  useGetComplaintsByStatusQuery,
-  useUpdateComplaintMutation,
-  useUpdateComplaintStatusMutation,
-  useDeleteComplaintMutation,
-} = complaintsAPI;
+  useCreateTicketMutation,
+  useGetTicketsQuery,
+  useGetTicketByIdQuery,
+  useGetTicketsByUserIdQuery,
+  useUpdateTicketMutation,
+  useUpdateTicketStatusMutation,
+  useDeleteTicketMutation,
+} = ticketsAPI;

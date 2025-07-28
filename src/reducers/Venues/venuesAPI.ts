@@ -7,9 +7,9 @@ export type TVenue = {
     VenueID: number;
     venueName: string;
     address: string;
-    image_url: string;
-    capacity: string;
-    createdAt: string;
+    image_url: string | null;
+    capacity: number;
+    createdAt: string | null;
 }
 
 export const venuesAPI = createApi({
@@ -38,7 +38,7 @@ export const venuesAPI = createApi({
     }),
 
     // GET all Venues
-    getAllVenues: builder.query<{ data: TVenue[] }, void>({
+    getAllVenues: builder.query<{ Venues: TVenue[] }, void>({
       query: () => "/venue/allVenues",
       providesTags: ["Prescriptions"],
     }),
@@ -72,6 +72,7 @@ export const venuesAPI = createApi({
 export const {
   useCreateVenueMutation,
   useGetVenueByIdQuery,
+  useGetAllVenuesQuery, // 👈 Add this
   useUpdateVenueMutation,
   useDeleteVenueMutation,
 } = venuesAPI;

@@ -23,7 +23,7 @@ const HostDashboard = () => {
   }, [drawerOpen]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-black">
+    <div className="flex flex-col min-h-screen bg-purple-300">
       {/* Navbar */}
       <Navbar />
 

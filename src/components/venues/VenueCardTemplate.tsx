@@ -3,9 +3,9 @@ import React from "react";
 interface VenueCardProps {
   venueName: string;
   address: string;
-  image_url: string;
+  image_url: string | null;
   capacity: number;
-  createdAt: string;
+  createdAt: string | null;
 }
 
 const VenueCardTemplate: React.FC<VenueCardProps> = ({
@@ -19,7 +19,7 @@ const VenueCardTemplate: React.FC<VenueCardProps> = ({
     <div className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
       <div className="relative">
         <img
-          src={image_url}
+          src={image_url || "/fallback.jpg"} // Use fallback image
           alt={venueName}
           className="w-full h-48 object-cover"
         />
@@ -31,12 +31,13 @@ const VenueCardTemplate: React.FC<VenueCardProps> = ({
         <h2 className="text-xl font-semibold text-gray-800">{venueName}</h2>
         <p className="text-sm text-gray-600">{address}</p>
         <p className="text-xs text-gray-400">
-          Added on: {new Date(createdAt).toLocaleDateString()}
+          {createdAt
+            ? `Added on: ${new Date(createdAt).toLocaleDateString()}`
+            : "Date unavailable"}
         </p>
       </div>
     </div>
   );
 };
-
 
 export default VenueCardTemplate;

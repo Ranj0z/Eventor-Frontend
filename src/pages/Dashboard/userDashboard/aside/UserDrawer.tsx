@@ -1,7 +1,5 @@
-
 // pages/Dashboard/userDashboard/aside/UserDrawer.tsx
-import { Link } from "react-router";
-import { userDrawerData } from "./drawerData";
+import { Link } from "react-router-dom"; // Use react-router-dom for Link
 
 const UserDrawer = () => {
   return (
@@ -16,8 +14,8 @@ const UserDrawer = () => {
               to={item.link}
               className="flex items-center gap-4 p-4 hover:bg-gray-900 transition-colors duration-200"
             >
-              <item.icon size={30} />
-              <span className="text-xl text-gray-100 mb-2">{item.name}</span>
+              <item.icon size={24} className="text-yellow-400" /> {/* Apply size and color directly */}
+              <span className="text-lg text-white">{item.name}</span> {/* Standardize text size to match admin, text color to white */}
             </Link>
           </li>
         ))}

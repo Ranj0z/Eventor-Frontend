@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cy": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",

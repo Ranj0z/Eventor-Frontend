@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiDomain } from "../../utils/ApiDomain";
 import type { RootState } from "../../app/store";
 
-export type TicketStatus = "Pending" | "In Progress" | "Resolved" | "Closed";
+export type TicketStatus = "Pending" | "In Progress" | "Closed";
 
 export type TTicket = {
   TicketID: number;

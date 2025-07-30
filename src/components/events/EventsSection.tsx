@@ -1,9 +1,13 @@
 // src/components/events/EventsSection.tsx
 
-import React from "react";
+import React, { useState } from "react";
 import EventCard from "./EventCardTemplate";
 import { useGetAllEventsQuery, type TEvents } from "../../reducers/Events/eventsAPI";
 import { useGetAllVenuesQuery } from "../../reducers/Venues/venuesAPI";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import type { RootState } from "../../app/store";
+import CreateEventModal from "../../pages/Events/CreateEventModal";
 
 const isToday = (dateStr: string) => {
   const today = new Date();
@@ -28,6 +32,11 @@ const isUpcoming = (dateStr: string) => {
 };
 
 const EventsSection: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user.user);
+  const isAdmin = user?.role === "admin";
+
   const {
     data: eventResponse,
     isLoading: loadingEvents,
@@ -93,21 +102,36 @@ const EventsSection: React.FC = () => {
     );
   };
 
-  const hasAnyEvents = todayEvents.length > 0 || upcomingEvents.length > 0 || pastEvents.length > 0;
+  const hasAnyEvents =
+    todayEvents.length > 0 || upcomingEvents.length > 0 || pastEvents.length > 0;
 
   return (
     <div className="px-4 sm:px-6 md:px-10 py-4">
       {/* Header */}
-      <div className="text-center mb-6">
-        <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">
-          Events We’re Hosting
-        </h1>
-        <p className="text-gray-600 text-sm sm:text-lg mt-2">
-          Discover and book tickets to upcoming experiences near you.
-        </p>
+      <div className="text-center mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">
+            Events We’re Hosting
+          </h1>
+          <p className="text-gray-600 text-sm sm:text-lg mt-2">
+            Discover and book tickets to upcoming experiences near you.
+          </p>
+        </div>
+
+        {/* ✅ Only Admins See This Button */}
+        {isAdmin && (
+          <div>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+              + Create New Event
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Scrollable Events Container (70% screen height) */}
+      {/* Events List */}
       <div className="h-[75vh] overflow-y-auto pr-1">
         {loadingEvents || loadingVenues ? (
           <p className="text-center text-gray-500 italic">Loading events...</p>
@@ -129,6 +153,9 @@ const EventsSection: React.FC = () => {
           </>
         )}
       </div>
+
+      {/* ✅ Modal Rendered Here */}
+      <CreateEventModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

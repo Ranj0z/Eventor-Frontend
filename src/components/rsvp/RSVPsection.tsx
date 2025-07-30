@@ -1,3 +1,5 @@
+// src\components\rsvp\RSVPsection.tsx
+
 import React, { useState } from "react";
 import RSVPCardTemplate from "./RSVPCardTemplate";
 import CreateRSVPForm from "./CreateRSVPForm";
@@ -201,7 +203,7 @@ const RSVPsection: React.FC = () => {
             >
               &times;
             </button>
-            <CreateRSVPForm />
+            + create RSVP
           </div>
         </div>
       )}

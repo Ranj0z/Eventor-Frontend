@@ -1,3 +1,5 @@
+// src\reducers\Login\userSlice.ts
+
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { TUser } from "../Users/usersAPI";
 

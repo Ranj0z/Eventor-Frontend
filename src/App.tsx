@@ -11,7 +11,7 @@ import { Toaster } from 'sonner'
 import { type RootState } from './app/store'
 import { useSelector } from 'react-redux'
 import FeaturesPage from './pages/FeaturesPages'
-import EventsPage from './pages/Events'
+import EventsPage from './pages/Events/Events'
 import VenuesPage from './pages/VenuesPage'
 import AdminDashboard from './pages/Dashboard/adminDashboard/Dashboard'
 import UserDashboard from './pages/Dashboard/userDashboard/Dashboard'
@@ -54,7 +54,7 @@ function App() {
       element: <Login />
     },
     {
-      path: '/backstage/features',
+      path: '/features',
       element: <FeaturesPage />
     },
     {

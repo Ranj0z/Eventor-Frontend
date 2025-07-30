@@ -9,15 +9,16 @@ interface CreateRSVPFormProps {
   isOpen: boolean;
   onClose: () => void;
   onRSVPCreated?: (rsvp: TRSVP) => void;
-  defaultUserID?: number;
-  defaultEventID?: number;
 }
 
-const CreateRSVPForm = ({ isOpen, onClose, onRSVPCreated, defaultUserID, defaultEventID }: CreateRSVPFormProps) => {
-  const [createRSVP] = useCreateRSVPMutation();
+const CreateRSVPForm = ({ isOpen, onClose, onRSVPCreated}: CreateRSVPFormProps) => {
+  const [createRSVP, 
+    // { isLoading: isCreating, error: createError }
+
+  ] = useCreateRSVPMutation();
   const [formData, setFormData] = useState({
-    UserID: defaultUserID?.toString() || "",
-    EventID: defaultEventID?.toString() || "",
+    UserID: "",
+    EventID: "",
     quantity: 1,
     basePrice: 0,
   });
@@ -29,32 +30,9 @@ const CreateRSVPForm = ({ isOpen, onClose, onRSVPCreated, defaultUserID, default
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-  const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0];
     setRsvpDate(today);
-
-    if (defaultUserID) {
-      setFormData((prev) => ({
-        ...prev,
-        UserID: defaultUserID.toString(),
-      }));
-    }
-
-    if (defaultEventID) {
-      const selectedEvent = EventsData.find(
-        (event) => event.EventID === defaultEventID
-      );
-      if (selectedEvent) {
-        setFormData((prev) => ({
-          ...prev,
-          EventID: defaultEventID.toString(),
-          basePrice: Number(selectedEvent.ticketsPrice),
-        }));
-        setEventName(selectedEvent.title);
-      }
-    }
-
-    // Escape key to close modal
-    const handleKeyDown = (e: KeyboardEvent) => {
+      const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
         onClose();
       }
@@ -69,7 +47,7 @@ const CreateRSVPForm = ({ isOpen, onClose, onRSVPCreated, defaultUserID, default
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [onClose, isOpen, defaultEventID, defaultUserID]);
+  }, [onClose, isOpen]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
@@ -143,14 +121,9 @@ const CreateRSVPForm = ({ isOpen, onClose, onRSVPCreated, defaultUserID, default
       };
 
       const result = await createRSVP(rsvpData).unwrap();
-      console.log("✅ RSVP created successfully:");
-    console.log("Server response:", result);
-    console.log("Submitted payload:", rsvpData);
-    
+      
       if (onRSVPCreated && result.data) {
         onRSVPCreated(result.data);
-        console.log(result.data);
-        console.log(rsvpData);
       }
       
       onClose();

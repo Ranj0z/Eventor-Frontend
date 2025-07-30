@@ -124,7 +124,7 @@ const UserTicketsSection: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 px-6 py-6">
+    <div className="h-[75vh] overflow-y-auto space-y-6 px-6 py-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -154,7 +154,7 @@ const UserTicketsSection: React.FC = () => {
 
       {/* Create Ticket Form */}
       {showCreateForm && (
-        <div className="bg-white p-6 rounded-lg shadow border">
+        <div className="bg-white p-6  rounded-lg shadow border">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Create New Support Ticket</h3>
           <div className="space-y-4">
             <div>
@@ -220,8 +220,8 @@ const UserTicketsSection: React.FC = () => {
           <div className="text-sm text-gray-600">In Progress</div>
         </div>
         <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-green-600">{getStatusCount('Resolved')}</div>
-          <div className="text-sm text-gray-600">Resolved</div>
+          <div className="text-2xl font-bold text-green-600">{getStatusCount('Closed')}</div>
+          <div className="text-sm text-gray-600">Closed</div>
         </div>
       </div>
 
@@ -250,7 +250,6 @@ const UserTicketsSection: React.FC = () => {
                 <option value="All">All Status</option>
                 <option value="Pending">Pending</option>
                 <option value="In Progress">In Progress</option>
-                <option value="Resolved">Resolved</option>
                 <option value="Closed">Closed</option>
               </select>
             </div>

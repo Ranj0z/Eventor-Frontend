@@ -6,7 +6,25 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import CreateRSVPModal from "./CreateRSVPModal";
 
-const EventModal: React.FC = ({
+// --- ADD THIS INTERFACE ---
+interface EventModalProps {
+  closeModal: () => void;
+  EventID: number; // Ensure EventID is expected
+  image_url: string;
+  title: string;
+  description: string;
+  category: string;
+  venueName: string;
+  date: string;
+  time: string;
+  ticketsPrice: number;
+  soldTickets: number;
+  totalTickets: number;
+}
+// --- END ADDITION ---
+
+// --- UPDATE FC PROPS ---
+const EventModal: React.FC<EventModalProps> = ({ // Change 'any' to 'EventModalProps'
   closeModal,
   image_url,
   title,
@@ -18,8 +36,8 @@ const EventModal: React.FC = ({
   ticketsPrice,
   soldTickets,
   totalTickets,
-  EventID,
-}: any) => {
+  EventID, // Make sure EventID is destructured
+}: EventModalProps) => { // Change 'any' to 'EventModalProps'
   const [isRSVPModalOpen, setIsRSVPModalOpen] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
 
@@ -74,7 +92,7 @@ const EventModal: React.FC = ({
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            
+
             {/* Category Badge */}
             <div className="absolute top-3 left-3">
               <span className="px-2 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-full border border-white/30">
@@ -134,7 +152,7 @@ const EventModal: React.FC = ({
                   </svg>
                   <span className="font-medium text-gray-500">Price</span>
                 </div>
-                <span className="text-gray-900 font-bold text-sm sm:text-base">KES {parseFloat(ticketsPrice).toLocaleString()}</span>
+                <span className="text-gray-900 font-bold text-sm sm:text-base">KES (ticketsPrice)</span>
               </div>
 
               <div className="p-3 bg-gray-50 rounded-lg">
@@ -158,10 +176,10 @@ const EventModal: React.FC = ({
                 <span className="text-sm font-semibold text-gray-900">Tickets Sold</span>
                 <span className="text-xs text-gray-600">{soldTickets}/{totalTickets}</span>
               </div>
-              
+
               {/* Progress Bar */}
               <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                <div 
+                <div
                   className={`h-2 rounded-full transition-all duration-500 ${
                     ticketPercentage > 80 ? 'bg-gradient-to-r from-red-500 to-red-600' :
                     ticketPercentage > 60 ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
@@ -170,7 +188,7 @@ const EventModal: React.FC = ({
                   style={{ width: `${ticketPercentage}%` }}
                 />
               </div>
-              
+
               <div className="text-center">
                 <span className="text-xs text-gray-600">{Math.round(ticketPercentage)}% sold</span>
               </div>
@@ -180,14 +198,16 @@ const EventModal: React.FC = ({
       </motion.div>
 
       {/* RSVP Modal */}
-      <CreateRSVPModal
-        isOpen={isRSVPModalOpen}
-        onClose={() => setIsRSVPModalOpen(false)}
-        eventId={EventID}
-        eventTitle={title}
-        ticketPrice={parseFloat(ticketsPrice)}
-        availableTickets={availableTickets}
-      />
+      {isRSVPModalOpen && (
+        <CreateRSVPModal
+          isOpen={isRSVPModalOpen}
+          onClose={() => setIsRSVPModalOpen(false)}
+          eventId={EventID} // This is now correctly sourced from the prop
+          eventTitle={title}
+          ticketPrice={ticketsPrice}
+          availableTickets={availableTickets}
+        />
+      )}
     </>
   );
 };

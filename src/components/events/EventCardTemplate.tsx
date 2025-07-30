@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import EventModal from "./EventModal";
 
 type EventCardProps = {
+  EventID: number; // <--- ADD THIS LINE
   title: string;
   description: string;
   category: string;
@@ -84,11 +85,11 @@ const EventCard: React.FC<EventCardProps> = (event) => {
         </div>
       </motion.div>
 
-      {/* Modal */}
-      {isModalOpen && (
+        {isModalOpen && (
         <EventModal
           closeModal={closeModal}
-          {...event}
+          // EventID={event.EventID} // <--- This line is critical: explicitly pass EventID
+          {...event} // This spreads all other props, but explicit EventID is safer
         />
       )}
     </>

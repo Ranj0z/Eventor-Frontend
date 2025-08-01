@@ -1,91 +1,96 @@
-// src\pages\Dashboard\userDashboard\Dashboard.tsx
+// import { useEffect, useState } from "react";
+// import { Outlet } from "react-router"; // Correct import for Outlet
+// import UserDrawer from "./aside/UserDrawer";
+// import { FaBars } from "react-icons/fa";
+// import { IoCloseSharp } from "react-icons/io5";
+// import Footer from "../../../components/footer/Footer";
+// import Navbar from "../../../components/nav/Navbar";
 
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router";
-import UserDrawer from "./aside/UserDrawer";
-import { FaBars } from "react-icons/fa";
-import { IoCloseSharp } from "react-icons/io5";
-import Footer from "../../../components/footer/Footer";
-import Navbar from "../../../components/nav/Navbar";
+// const UserDashboard = () => {
+//   const [drawerOpen, setDrawerOpen] = useState(() =>
+//     window.innerWidth >= 1024
+//   );
 
-const UserDashboard = () => {
-  // Initialize drawerOpen based on window width for consistent desktop behavior
-  const [drawerOpen, setDrawerOpen] = useState(() =>
-    window.innerWidth >= 1024
-  );
+//   const handleDrawerToggle = () => {
+//     setDrawerOpen((prev) => !prev);
+//   };
 
-  const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
+//   useEffect(() => {
+//     const handleResize = () => {
+//       // On desktop (lg and up), always keep drawer open
+//       if (window.innerWidth >= 1024) {
+//         setDrawerOpen(true);
+//       } else {
+//         // On mobile, if drawer was open, keep it open, otherwise respect its current state
+//         // setDrawerOpen(false); // Only uncomment if you *always* want it to close on mobile resize
+//       }
+//     };
+//     window.addEventListener("resize", handleResize);
+//     return () => window.removeEventListener("resize", handleResize);
+//   }, []);
 
-  // Effect to handle window resize for desktop drawer behavior
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setDrawerOpen(true); // Keep drawer open on large screens
-      } else {
-        // Optionally close on resize if it shrinks below lg, or leave as is based on preference
-        // setDrawerOpen(false); // Uncomment this line if you want it to collapse on resize
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+//   return (
+//     <div className="flex flex-col min-h-screen overflow-x-hidden bg-purple-300">
+//       <Navbar />
 
-  // Removed the overflow:hidden on body for drawer open, as the AdminDashboard doesn't use it.
-  // The overflow-hidden on the flex container handles it.
+//       <div className="flex flex-1 overflow-hidden">
+//         {/* Sidebar */}
+//         <aside
+//           // Combined styling for desktop and mobile responsiveness
+//           className={`
+//             bg-purple-700 text-white h-full flex-shrink-0
+//             transition-all duration-300 ease-in-out
+//             ${
+//               drawerOpen
+//                 ? "w-64 min-w-[16rem] translate-x-0" // Drawer open: full width, visible
+//                 : "w-0 overflow-hidden -translate-x-full" // Drawer closed: zero width, hidden, off-screen
+//             }
+//             lg:w-64 lg:min-w-[16rem] lg:static lg:translate-x-0 lg:overflow-visible // Desktop: always visible, static
+//           `}
+//         >
+//           <div className="relative h-full">
+//             {/* Close button for mobile/tablet when drawer is open */}
+//             {drawerOpen && (
+//               <button
+//                 className="absolute top-4 right-4 text-white text-2xl lg:hidden"
+//                 onClick={handleDrawerToggle}
+//               >
+//                 <IoCloseSharp />
+//               </button>
+//             )}
+//             {/* Render UserDrawer content only if drawer is logically open */}
+//             {drawerOpen && <UserDrawer />}
+//           </div>
+//         </aside>
 
-  return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden bg-purple-300">
-      <Navbar />
+//         {/* Main Content Area */}
+//         <div className="flex flex-col flex-1 overflow-auto"> {/* Changed to overflow-auto for the main content itself */}
+//           {/* Header (Top Bar) for the main content */}
+//           <div className="flex items-center px-4 py-4 bg-purple-700 shadow z-10">
+//             {/* Burger menu button for mobile/tablet when drawer is closed */}
+//             {!drawerOpen && (
+//               <button
+//                 className="mr-4 text-white text-2xl lg:hidden" // Only show on smaller screens
+//                 onClick={handleDrawerToggle}
+//               >
+//                 <FaBars />
+//               </button>
+//             )}
+//             <h1 className="text-yellow-400 text-lg sm:text-xl font-bold tracking-wide">
+//               Welcome to your User Dashboard
+//             </h1>
+//           </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <aside
-          className={`bg-purple-700 text-white transition-all duration-300 h-full ${
-            drawerOpen ? "w-64 min-w-[16rem]" : "w-0 overflow-hidden"
-          } lg:relative lg:translate-x-0`} //* Added lg:relative and lg:translate-x-0 */
-        >
-          <div className="relative h-full">
-            {drawerOpen && ( // Only render close button and drawer content if open
-              <>
-                <button
-                  className="absolute top-4 right-4 text-white text-2xl lg:hidden" // Hide on large screens
-                  onClick={handleDrawerToggle}
-                >
-                  <IoCloseSharp />
-                </button>
-                <UserDrawer />
-              </>
-            )}
-          </div>
-        </aside>
+//           {/* This is where the nested routes will render */}
+//           <main className="flex-1 bg-gray-50 text-black p-4 md:p-6 overflow-y-auto"> {/* Added padding and overflow-y-auto for content */}
+//             <Outlet />
+//           </main>
+//         </div>
+//       </div>
 
-        {/* Main Content */}
-        <div className="flex flex-col flex-1 overflow-hidden">
-          {/* Header + Toggle */}
-          <div className="flex items-center px-4 py-4 bg-purple-700 shadow z-10">
-            {!drawerOpen && ( // Only show open button if drawer is closed
-              <button
-                className="mr-4 text-white text-2xl"
-                onClick={handleDrawerToggle}
-              >
-                <FaBars />
-              </button>
-            )}
-            <h1 className="text-yellow-400 text-lg sm:text-xl font-bold tracking-wide">
-              Welcome to your User Dashboard
-            </h1>
-          </div>
+//       <Footer />
+//     </div>
+//   );
+// };
 
-          {/* Page Content */}
-          <main className="flex-1 overflow-y-auto bg-gray-50 text-black">
-            <Outlet />
-          </main>
-        </div>
-      </div>
-
-      <Footer />
-    </div>
-  );
-};
-
-export default UserDashboard;
+// export default UserDashboard;

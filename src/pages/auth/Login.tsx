@@ -1,3 +1,5 @@
+// C:\Users\Admin\Desktop\The Jitu\Eventor-Frontend\src\pages\auth\Login.tsx
+
 import * as yup from 'yup';
 import { toast } from 'sonner';
 import { useState } from 'react';
@@ -13,8 +15,6 @@ type LoginInputs = {
   email: string;
   password: string;
 };
-
-
 
 const schema = yup.object({
   email: yup.string().email('Invalid email').max(100).required('Email is required'),
@@ -43,17 +43,17 @@ function Login() {
     try {
       const response = await loginUser(data).unwrap();
     
-          // Dispatch to Redux — this is the missing part!
-    dispatch(loginSuccess({
-      token: response.token,
-      user: response.user,
-    }));
+      // Dispatch to Redux
+      dispatch(loginSuccess({
+        token: response.token,
+        user: response.user,
+      }));
     
-    console.log(response);
+      console.log(response);
       toast.success("Login successful!");
-      if (response.user.role === 'admin') navigate('/admin/dashboard');
-      else if (response.user.role === 'host') navigate('/host/dashboard');
-      else navigate('/user/dashboard');
+      if (response.user.role === 'admin') navigate('/admin/dashboard/events');
+      else if (response.user.role === 'host') navigate('/host/dashboard/my-events');
+      else navigate('/user/dashboard/events');
     } catch {
       toast.error("Login failed. Please check your credentials.");
     }
@@ -62,34 +62,34 @@ function Login() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-<header className="bg-white shadow-sm w-full">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-    {/* Logo */}
-    <div className="flex items-center space-x-3 cursor-pointer">
-      <img
-        src="https://res.cloudinary.com/dzysb2qhd/image/upload/v1753007173/main-sample.png"
-        alt="Logo"
-        className="w-12 h-12 object-cover rounded-2xl shadow-2xl"
-      />
-      <h1 className="text-2xl font-bold text-black">Eventor</h1>
-    </div>
+      <header className="bg-white shadow-sm w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center space-x-3 cursor-pointer">
+            <img
+              src="https://res.cloudinary.com/dzysb2qhd/image/upload/v1753007173/main-sample.png"
+              alt="Logo"
+              className="w-12 h-12 object-cover rounded-2xl shadow-2xl"
+            />
+            <h1 className="text-2xl font-bold text-black">Eventor</h1>
+          </div>
 
-    {/* Register Link */}
-    <div className=" mx-auto"> 
-    <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end w-full sm:w-auto text-center sm:text-right gap-y-1 sm:gap-x-2 break-words">
-      <p className="text-gray-600 text-sm md:text-base leading-snug">
-        Don't have an account?
-      </p>
-      <a
-        href="/register"
-        className="text-blue-600 hover:text-red-700 font-semibold text-sm md:text-base"
-      >
-        Register here
-      </a>
-    </div>
-    </div>
-  </div>
-</header>
+          {/* Register Link */}
+          <div className=" mx-auto"> 
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end w-full sm:w-auto text-center sm:text-right gap-y-1 sm:gap-x-2 break-words">
+              <p className="text-gray-600 text-sm md:text-base leading-snug">
+                Don't have an account?
+              </p>
+              <a
+                href="/register"
+                className="text-blue-600 hover:text-red-700 font-semibold text-sm md:text-base"
+              >
+                Register here
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* Main content */}
       <main className="flex-grow flex justify-center items-start pt-[10vh] sm:pt-[12vh] lg:pt-[15vh]">
@@ -110,6 +110,7 @@ function Login() {
                 <label className="block text-sm font-medium text-gray-700">Email</label>
                 <input
                   type="email"
+                  data-test="login-email-input"
                   {...register('email')}
                   placeholder="Enter your email address"
                   readOnly={!!emailFromState}
@@ -126,6 +127,7 @@ function Login() {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
+                    data-test="login-password-input"
                     {...register('password')}
                     placeholder="Enter your password"
                     className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-lg"
@@ -153,6 +155,7 @@ function Login() {
               {/* Submit button */}
               <button
                 type="submit"
+                data-test="login-submit-button"
                 disabled={isLoading}
                 className="w-full bg-blue-300 text-black py-3 px-6 rounded-lg font-semibold text-lg flex items-center justify-center space-x-2 disabled:opacity-50"
               >

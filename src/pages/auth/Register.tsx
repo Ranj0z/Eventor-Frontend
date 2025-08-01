@@ -1,3 +1,5 @@
+// C:\Users\Admin\Desktop\The Jitu\Eventor-Frontend\src\pages\auth\Register.tsx
+
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,7 +13,7 @@ type RegisterInputs = {
   firstName: string;
   lastName: string;
   email: string;
-  contactPhone: string;
+  phoneNumber: string;
   address: string;
   password: string;
   confirmPassword: string;
@@ -21,7 +23,7 @@ const schema = yup.object({
   firstName: yup.string().max(50).required('First name is required'),
   lastName: yup.string().max(50).required('Last name is required'),
   email: yup.string().email().max(100).required('Email is required'),
-  contactPhone: yup.string().max(20).required('Phone number is required'),
+  phoneNumber: yup.string().max(20).required('Phone number is required'),
   address: yup.string().max(255).required('Address is required'),
   password: yup.string().min(6).max(255).required('Password is required'),
   confirmPassword: yup
@@ -54,7 +56,7 @@ function Register() {
       lastName: data.lastName,
       email: data.email,
       password: data.password,
-      phoneNumber: data.contactPhone,
+      phoneNumber: data.phoneNumber,
       address: data.address,
     };
 
@@ -120,6 +122,7 @@ function Register() {
                       <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                       <input
                         type="text"
+                        data-test="signup-firstname"
                         {...register('firstName')}
                         placeholder="First name"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
@@ -131,6 +134,7 @@ function Register() {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
                       <input
                         type="text"
+                        data-test="signup-lastname"
                         {...register('lastName')}
                         placeholder="Last name"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
@@ -142,6 +146,7 @@ function Register() {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                       <input
                         type="email"
+                        data-test="signup-email"
                         {...register('email')}
                         placeholder="Email"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
@@ -153,12 +158,13 @@ function Register() {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                       <input
                         type="tel"
-                        {...register('contactPhone')}
+                        data-test="signup-phone"
+                        {...register('phoneNumber')}
                         placeholder="Phone number"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
                       />
-                      {errors.contactPhone && (
-                        <span className="text-red-600 text-sm">{errors.contactPhone.message}</span>
+                      {errors.phoneNumber && (
+                        <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>
                       )}
                     </div>
 
@@ -166,6 +172,7 @@ function Register() {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
                       <input
                         type="text"
+                        data-test="signup-address"
                         {...register('address')}
                         placeholder="Address"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
@@ -178,6 +185,7 @@ function Register() {
                       <div className="relative">
                         <input
                           type={showPassword ? 'text' : 'password'}
+                          data-test="signup-password"
                           {...register('password')}
                           placeholder="Password"
                           className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
@@ -198,6 +206,7 @@ function Register() {
                       <div className="relative">
                         <input
                           type={showConfirmPassword ? 'text' : 'password'}
+                          data-test="signup-confirmpassword"
                           {...register('confirmPassword')}
                           placeholder="Confirm password"
                           className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
@@ -218,6 +227,7 @@ function Register() {
 
                   <button
                     type="submit"
+                    data-test="signup-submitbtn"
                     disabled={isLoading}
                     className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-blue-600 transition disabled:opacity-50"
                   >
@@ -227,7 +237,7 @@ function Register() {
                         <span>Creating Account...</span>
                       </div>
                     ) : (
-                      'Sign Up Now'
+                      'Create Account'
                     )}
                   </button>
 

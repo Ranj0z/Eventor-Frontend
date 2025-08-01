@@ -98,6 +98,7 @@ const Hero = () => {
             className="hero min-h-65 max-w-150 rounded-lg "
             style={{
               backgroundImage:
+              
                 "url(https://www.zohowebstatic.com/sites/zweb/images/backstage/home/zwb-security-privacy.png)",
             }}
           >

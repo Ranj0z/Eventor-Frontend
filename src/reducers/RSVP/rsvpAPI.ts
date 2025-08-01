@@ -52,12 +52,12 @@ export const rsvpAPI = createApi({
     }),
 
     // Get RSVPs by EventID
-    getRSVPsByEventId: builder.query<{ data: TRSVP[] }, number>({
+    getRSVPsByEventId: builder.query<{ reservation: TRSVP[] }, number>({
       query: (eventId) => `/reservation/event/${eventId}`,
     }),
 
     // Get RSVPs by UserID
-    getRSVPsByUserId: builder.query<{ data: TRSVP[] }, number>({
+    getRSVPsByUserId: builder.query<{ reservation: TRSVP[] }, number>({
       query: (userId) => `/reservation/user/${userId}`,
     }),
 

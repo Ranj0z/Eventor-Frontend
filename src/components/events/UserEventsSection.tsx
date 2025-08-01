@@ -41,6 +41,7 @@ const UserEventsSection: React.FC = () => {
     data: eventResponse,
     isLoading: loadingEvents,
     error: errorEvents,
+    refetch
   } = useGetAllEventsQuery();
 
   const {
@@ -59,7 +60,7 @@ const UserEventsSection: React.FC = () => {
 
   const events = eventResponse?.Events || [];
   const venues = venueResponse?.Venues || [];
-  const userRSVPs = rsvpResponse?.data || [];
+  const userRSVPs = rsvpResponse?.reservation || [];
 
   // Create venue mapping
   const venueMap: Record<number, string> = {};
@@ -130,6 +131,7 @@ const UserEventsSection: React.FC = () => {
               return (
                 <div key={event.EventID} className="relative">
                   <EventCard
+                    EventID={event.EventID}
                     title={event.title}
                     description={event.description}
                     category={event.category}
@@ -138,6 +140,7 @@ const UserEventsSection: React.FC = () => {
                     ticketsPrice={event.ticketsPrice}
                     totalTickets={event.totalTickets}
                     soldTickets={event.soldTickets}
+                    reloadEvents={refetch}
                     image_url={
                       event.image_url ||
                       "https://res.cloudinary.com/dzysb2qhd/image/upload/v1753007171/samples/man-on-a-street.jpg"
@@ -145,7 +148,7 @@ const UserEventsSection: React.FC = () => {
                     venueName={venueMap[event.VenueID] || "Unknown Venue"}
                   />
                   {showRSVPInfo && rsvpInfo && (
-                    <div className="absolute top-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                    <div className="absolute top-2 left-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
                       <div className={`font-medium ${
                         rsvpInfo.status === 'Confirmed' ? 'text-green-400' :
                         rsvpInfo.status === 'Pending' ? 'text-yellow-400' :

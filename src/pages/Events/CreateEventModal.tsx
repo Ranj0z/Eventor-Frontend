@@ -9,6 +9,7 @@ interface CreateEventModalProps {
   isOpen: boolean;
   onClose: () => void;
   onEventCreated?: (event: TEvents) => void;
+  reloadEvents: () => void;
 }
 
 const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalProps) => {

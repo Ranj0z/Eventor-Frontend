@@ -20,12 +20,14 @@ interface EventModalProps {
   ticketsPrice: number;
   soldTickets: number;
   totalTickets: number;
+  reloadEvents: () => void;
 }
 // --- END ADDITION ---
 
 // --- UPDATE FC PROPS ---
 const EventModal: React.FC<EventModalProps> = ({ // Change 'any' to 'EventModalProps'
   closeModal,
+  reloadEvents,
   image_url,
   title,
   description,
@@ -202,10 +204,12 @@ const EventModal: React.FC<EventModalProps> = ({ // Change 'any' to 'EventModalP
         <CreateRSVPModal
           isOpen={isRSVPModalOpen}
           onClose={() => setIsRSVPModalOpen(false)}
+          closeEventModal={closeModal}
           eventId={EventID} // This is now correctly sourced from the prop
           eventTitle={title}
           ticketPrice={ticketsPrice}
           availableTickets={availableTickets}
+          reloadEvents={reloadEvents}
         />
       )}
     </>

@@ -1,3 +1,5 @@
+// C:\Users\Admin\Desktop\The Jitu\Eventor-Frontend\cypress\e2e\register.cy.js
+
 describe("signup form tests", () => {
     beforeEach(() => {
         cy.visit('/register');
@@ -17,7 +19,7 @@ describe("signup form tests", () => {
                     firstName: 'Admin',
                     lastName: 'Tester',
                     email: 'daddyyooh@gmail.com',
-                    contactPhone: '0712345678',
+                    phoneNumber: '0712345678',
                     address: 'P.O Box 1126-10100 Nyeri, Kenya',
                     role: 'admin',
                     isVerified: true
@@ -75,10 +77,9 @@ describe("signup form tests", () => {
                     firstName: 'Admin',
                     lastName: 'Tester',
                     email: 'daddyyooh@gmail.com',
-                    contactPhone: '0712345678',
+                    phoneNumber: '0712345678',
                     address: 'P.O Box 1126-10100 Nyeri, Kenya',
                     password: 'pass123',
-                    confirmPassword: 'pass123'
                 });
             });
 
@@ -100,7 +101,7 @@ describe("signup form tests", () => {
         cy.contains(/Email is required/i);
         cy.contains(/Phone number is required/i);
         cy.contains(/Address is required/i);
-        cy.contains(/Min 6 characters/i);
+        cy.contains(/password must be at least 6 characters/i);
         cy.contains(/Confirm password is required/i)
     });
 

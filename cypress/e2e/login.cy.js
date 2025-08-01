@@ -1,6 +1,8 @@
+// C:\Users\Admin\Desktop\The Jitu\Eventor-Frontend\cypress\e2e\login.cy.js
+
 describe("form tests", () => {
     beforeEach(() => {
-        cy.visit('/login')
+        cy.visit('http://localhost:5173/login')
     })
 
     it("should login with valid credentials", () => {
@@ -57,9 +59,9 @@ describe("form tests", () => {
             .click()
 
         // Assert that the error message is displayed
-        cy.contains(/Login failed. Please check your credentials and try again./i).should('be.visible')
+        cy.contains(/Login failed. Please check your credentials./i).should('be.visible')
         cy.wait(1000)
-        cy.contains(/Login failed. Please check your credentials and try again./i).should('not.exist')
+        cy.contains(/Login failed. Please check your credentials./i).should('not.exist')
     })
 
      // Netgative test case for login with wrong email
@@ -83,8 +85,8 @@ describe("form tests", () => {
             .click()
 
         // Assert that the error message is displayed
-        cy.contains(/Login failed. Please check your credentials and try again./i).should('be.visible')
+        cy.contains(/Login failed. Please check your credentials./i).should('be.visible')
         cy.wait(1000)
-        cy.contains(/Login failed. Please check your credentials and try again./i).should('not.exist')
+        cy.contains(/Login failed. Please check your credentials./i).should('not.exist')
     })
 })

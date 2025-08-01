@@ -13,13 +13,15 @@ export type TTicket = {
   updated_at?: string;
 };
 
-interface TicketCardTemplateProps {
+interface TicketCardTemplateProps { 
+  firstName: string ;
   ticket: TTicket;
   onStatusChange?: (ticketId: number, newStatus: TicketStatus) => void;
   onViewDetails?: (ticketId: number) => void;
 }
 
 const TicketCardTemplate: React.FC<TicketCardTemplateProps> = ({
+  firstName,
   ticket,
   onStatusChange,
   onViewDetails,
@@ -46,7 +48,7 @@ const TicketCardTemplate: React.FC<TicketCardTemplateProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between h-full min-h-[260px]">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 truncate overflow-hidden whitespace-nowrap hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between h-full max-h-[260px]">
       {/* Header */}
       <div>
         <div className="flex justify-between items-start mb-4">
@@ -60,7 +62,7 @@ const TicketCardTemplate: React.FC<TicketCardTemplateProps> = ({
               <div className="flex items-center gap-1 max-w-[140px] overflow-hidden">
                 <User className="w-4 h-4 shrink-0" />
                 <span className="truncate whitespace-nowrap">
-                  User ID: {ticket.UserID}
+                  User: {firstName}
                 </span>
               </div>
               <div className="flex items-center gap-1 max-w-[140px] overflow-hidden">

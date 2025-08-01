@@ -1,24 +1,21 @@
-// src\reducers\Events\eventsAPI.ts
-
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiDomain } from "../../utils/ApiDomain";
 
 //Events Table
 export type TEvents = {
-    EventID: number;
-    title: string;
-    description: string;
-    VenueID: number;
-    category: string;
-    date: string;
-    time: string;
-    ticketsPrice:number;
-    totalTickets: number;
-    soldTickets: number;
-    image_url: string;  
-    createdAt: string;
-    updatedAt: string;
+  EventID: number;
+  title: string;
+  description: string;
+  VenueID: number;
+  category: string;
+  date: string;
+  time: string;
+  ticketsPrice: number;
+  totalTickets: number;
+  soldTickets: number;
+  image_url: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export const eventsAPI = createApi({
@@ -26,17 +23,13 @@ export const eventsAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: ApiDomain,
     prepareHeaders: (headers, { getState }) => {
-      // const token = (getState() as RootState).user.token;
-      // if (token) {
-      //   headers.set("Authorization", `Bearer ${token}`);
-      // }
       headers.set("Content-Type", "application/json");
       return headers;
     },
   }),
   tagTypes: ["Events"],
   endpoints: (builder) => ({
-    // POST New Event
+    // POST: Create New Event
     createEvent: builder.mutation<{ data: TEvents }, Partial<TEvents>>({
       query: (newEvent) => ({
         url: "/event/newevent",
@@ -46,24 +39,28 @@ export const eventsAPI = createApi({
       invalidatesTags: ["Events"],
     }),
 
-    // GET All Events
+    // GET: All Events
     getAllEvents: builder.query<{ Events: TEvents[] }, void>({
       query: () => "/event/allevents",
       providesTags: ["Events"],
     }),
 
-    // GET Event by ID
+    // GET: Event by ID
     getEventById: builder.query<{ data: TEvents }, number>({
       query: (id) => `/event/${id}`,
     }),
 
-    // GET /appointments/user/:userId
+    // GET: Events by Venue ID
     getEventsByVenueId: builder.query<{ data: TEvents[] }, number>({
-      query: (userId) => `/event/venue/${userId}`,
+      query: (venueId) => `/event/venue/${venueId}`,
     }),
 
-  
-    // PATCH Update Event by ID
+    // ✅ GET: Events by User ID (new)
+    getEventsByUserId: builder.query<{ data: TEvents[] }, number>({
+      query: (userId) => `/event/user/${userId}`,
+    }),
+
+    // PATCH: Update Event by ID
     updateEvent: builder.mutation<TEvents, Partial<TEvents> & { id: number }>({
       query: ({ id, ...rest }) => ({
         url: `/event/update/${id}`,
@@ -73,11 +70,10 @@ export const eventsAPI = createApi({
       invalidatesTags: ["Events"],
     }),
 
-
-    // DELETE /appointment/:id
+    // DELETE: Event by ID (✅ fixed route)
     deleteEvent: builder.mutation<{ message: string }, number>({
       query: (id) => ({
-        url: `/appointment/${id}`,
+        url: `/event/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Events"],
@@ -85,13 +81,12 @@ export const eventsAPI = createApi({
   }),
 });
 
-// ... your eventsAPI definition ...
-
 export const {
   useCreateEventMutation,
   useGetAllEventsQuery,
   useGetEventByIdQuery,
   useGetEventsByVenueIdQuery,
+  useGetEventsByUserIdQuery, // ✅ export new hook
   useUpdateEventMutation,
   useDeleteEventMutation,
 } = eventsAPI;

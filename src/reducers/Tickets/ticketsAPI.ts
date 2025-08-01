@@ -48,11 +48,13 @@ export const ticketsAPI = createApi({
     // GET /ticket/:id
     getTicketById: builder.query<{ message: string; Tickets: TTicket }, number>({
       query: (id) => `/ticket/${id}`,
+      providesTags: ["Tickets"],
     }),
 
     // GET /ticket/user/:id
     getTicketsByUserId: builder.query<{ message: string; Tickets: TTicket[] }, number>({
       query: (userId) => `/ticket/user/${userId}`,
+      providesTags: ["Tickets"],
     }),
 
     // PATCH /ticket/updateticket/:id

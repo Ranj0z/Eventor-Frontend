@@ -1,3 +1,4 @@
+// C:\Users\Admin\Desktop\The Jitu\Eventor-Frontend\src\components\home\AllFlexibility.tsx
 import React from "react";
 
 const EventCard = ({
@@ -17,11 +18,17 @@ const EventCard = ({
   videoSources: { src: string; type: string }[];
   colorClass: string;
 }) => (
-  <div className={`rounded-lg shadow-md p-6 text-white ${colorClass}`}>
-    <h3 className="text-xl font-semibold mb-2">{title}</h3>
-    <p className="mb-4">{description}</p>
+  <div
+    className={`rounded-lg shadow-md p-6 text-white ${colorClass}`}
+    data-test={`event-card-${title.toLowerCase()}`}
+  >
+    <h3 className="text-xl font-semibold mb-2" data-test="event-title">
+      {title}
+    </h3>
+    <p className="mb-4" data-test="event-description">{description}</p>
     <a
       href={link}
+      data-test="event-link"
       className="inline-flex items-center text-sm font-medium underline underline-offset-2"
       aria-label={linkLabel}
     >
@@ -36,6 +43,7 @@ const EventCard = ({
         poster={videoPoster}
         className="w-full h-full object-cover"
         aria-hidden="true"
+        data-test="event-video"
       >
         {videoSources.map((source, idx) => (
           <source key={idx} src={source.src} type={source.type} />
@@ -46,6 +54,7 @@ const EventCard = ({
         className="absolute bottom-2 right-2 bg-black/50 text-white p-2 rounded-full"
         aria-label="Play"
         aria-pressed="false"
+        data-test="event-video-play"
       >
         ▶
         <span className="sr-only">Play</span>
@@ -56,10 +65,13 @@ const EventCard = ({
 
 const FlexibilitySection: React.FC = () => {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-50" data-test="flexibility-section">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+          <h2
+            className="text-3xl md:text-4xl font-bold text-gray-800"
+            data-test="flexibility-heading"
+          >
             <span className="block">All the flexibility your</span> events need
           </h2>
         </div>

@@ -1,3 +1,5 @@
+// C:\Users\Admin\Desktop\The Jitu\Eventor-Frontend\src\components\nav\Navbar.tsx
+
 import { useState } from 'react';
 import { Menu, X, User, ChevronDown } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,15 +15,15 @@ const Navbar = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const token = useSelector((state: RootState) => state.user.token);
   const isLoggedIn = !!token;
-  const firstName = user?.first_name;
+  const firstName = user?.firstName;
   const role = user?.role;
 
   const dashboardPath = role === 'admin'
-    ? '/admin/dashboard'
+    ? '/admin/dashboard/events'
     : role === 'host'
     ? '/host/dashboard'
     : role === 'user'
-    ? '/user/dashboard'
+    ? '/user/dashboard/events'
     : '/login';
 
   const handleLogout = () => {
@@ -46,15 +48,14 @@ const Navbar = () => {
             onClick={() => navigateTo('/')}
           >
             <img
-                  src="https://res.cloudinary.com/dzysb2qhd/image/upload/v1753007173/main-sample.png"
-                  alt="Medical professionals at CareConnect"
-                  className="w-12 h-12 lg:h-[50px] object-cover object-top rounded-2xl shadow-2xl"
-                />
+              src="https://res.cloudinary.com/dzysb2qhd/image/upload/v1753007173/main-sample.png"
+              alt="Medical professionals at CareConnect"
+              className="w-12 h-12 lg:h-[50px] object-cover object-top rounded-2xl shadow-2xl"
+            />
             <div className="text-2xl font-bold">
               <span className="text-Black-600">Eventor</span>
             </div>
           </div>
-
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6 relative">
@@ -90,12 +91,14 @@ const Navbar = () => {
             ) : (
               <div className="flex items-center space-x-4">
                 <a 
+                  data-test="desktop-nav-login"
                   onClick={() => navigateTo('/login')} 
                   className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
                 >
                   Login
                 </a>
                 <a 
+                  data-test="desktop-nav-register"
                   onClick={() => navigateTo('/register')} 
                   className="text-gray-700 hover:text-blue-600 font-medium cursor-pointer transition-colors"
                 >

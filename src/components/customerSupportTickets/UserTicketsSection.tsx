@@ -9,10 +9,11 @@ const UserTicketsSection: React.FC = () => {
   // Get logged-in user from Redux store
     const { user } = useSelector((state: RootState) => state.user);
     const userId = user?.UserID;
+    const fName = user?.firstName;
   
   // API hooks - only fetch tickets for current user
   const { data: ticketsData, isLoading, error, refetch } = useGetTicketsByUserIdQuery(userId!, {
-    skip: !userId, // Skip query if no user ID
+    // skip: !userId, // Skip query if no user ID
   });
   const [createTicket] = useCreateTicketMutation();
 
@@ -295,6 +296,7 @@ const UserTicketsSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredTickets.map((ticket) => (
             <TicketCardTemplate
+              firstName = {fName}
               key={ticket.TicketID}
               ticket={ticket}
               onViewDetails={handleViewDetails}
